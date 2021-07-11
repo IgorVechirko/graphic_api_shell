@@ -27,6 +27,7 @@ namespace GAS
 				{
 					std::lock_guard<std::mutex> lock_quard(log_lock);
 					vprintf(format, var_args);
+					printf( "\n" );
 				}
 
 				va_end(var_args);

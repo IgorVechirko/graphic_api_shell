@@ -12,14 +12,25 @@ set( Class ${GAS_SRC_DIR}/GASStartClass.cpp ${GAS_SRC_DIR}/GASStartClass.h )
 
 set( Common ${GAS_SRC_DIR}/Common.h ${GAS_SRC_DIR}/Common.cpp )
 
+set( Allocator ${GAS_SRC_DIR}/Allocator.h ${GAS_SRC_DIR}/Allocator.cpp )
+set( ObjectsCreator ${GAS_SRC_DIR}/ObjectsCreator.h ${GAS_SRC_DIR}/ObjectsCreator.cpp )
+
 source_group( common FILES 
                             ${Class}
                             ${Common}
 )
 
+source_group( memory_managment FILES 
+                                    ${Allocator}
+                                    ${ObjectsCreator}
+)
+
+
 set( GAS_SRC 
              ${Class}
              ${Common}
+             ${Allocator}
+             ${ObjectsCreator}
 )
 
 #setup project

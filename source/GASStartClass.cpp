@@ -1,7 +1,12 @@
 #include "GASStartClass.h"
 
+#include "Allocator.h"
+#include "ObjectsCreator.h"
+
+
 namespace GAS
 {
+
 	GASStartClass::GASStartClass()
 	{
 	}
