@@ -14,6 +14,8 @@ set( Common ${GAS_SRC_DIR}/Common.h ${GAS_SRC_DIR}/Common.cpp )
 
 set( Allocator ${GAS_SRC_DIR}/Allocator.h ${GAS_SRC_DIR}/Allocator.cpp )
 set( ObjectsCreator ${GAS_SRC_DIR}/ObjectsCreator.h ${GAS_SRC_DIR}/ObjectsCreator.cpp )
+set( Ref ${GAS_SRC_DIR}/Ref.h ${GAS_SRC_DIR}/Ref.cpp )
+set( AutoReleasePool ${GAS_SRC_DIR}/AutoReleasePool.h ${GAS_SRC_DIR}/AutoReleasePool.cpp )
 
 source_group( common FILES 
                             ${Class}
@@ -23,6 +25,8 @@ source_group( common FILES
 source_group( memory_managment FILES 
                                     ${Allocator}
                                     ${ObjectsCreator}
+                                    ${Ref}
+                                    ${AutoReleasePool}
 )
 
 
@@ -31,6 +35,8 @@ set( GAS_SRC
              ${Common}
              ${Allocator}
              ${ObjectsCreator}
+             ${Ref}
+             ${AutoReleasePool}
 )
 
 #setup project

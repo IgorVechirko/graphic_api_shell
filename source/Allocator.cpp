@@ -3,7 +3,7 @@
 namespace GAS
 {
 	Allocator::Allocator()
-		: allocations_count_(0)
+		: allocations_count_{ 0 }
 	{
 	}
 
