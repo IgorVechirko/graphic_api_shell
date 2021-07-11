@@ -1,7 +1,5 @@
 #include "GASStartClass.h"
 
-#include <iostream>
-
 namespace GAS
 {
 	GASStartClass::GASStartClass()
@@ -14,7 +12,7 @@ namespace GAS
 
 	void GASStartClass::run()
 	{
-		std::cout << "Hello Graphic API Shell" << std::endl;
+		LOG_ERROR( "Hello Graphic API Shell" );
 	}
 
 }

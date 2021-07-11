@@ -10,10 +10,17 @@ set( GAS_SRC_DIR ${GAS_DIR}/source )
 
 set( Class ${GAS_SRC_DIR}/GASStartClass.cpp ${GAS_SRC_DIR}/GASStartClass.h )
 
-source_group( folder FILES ${Class} )
+set( Common ${GAS_SRC_DIR}/Common.h ${GAS_SRC_DIR}/Common.cpp )
+
+source_group( common FILES 
+                            ${Class}
+                            ${Common}
+)
 
 set( GAS_SRC 
-             ${Class} )
+             ${Class}
+             ${Common}
+)
 
 #setup project
 add_library( graphic_api_shell STATIC ${GAS_SRC} )
@@ -32,7 +39,8 @@ set( FUNC_TESTS_SRC_DIR ${GAS_DIR}/tests )
 set( Main ${FUNC_TESTS_SRC_DIR}/main.cpp )
 
 set( FUNC_TESTS_SRC
-                    ${Main} )
+                    ${Main} 
+)
 
 #setup functional tests project
 add_executable( functional_tests ${FUNC_TESTS_SRC} )
