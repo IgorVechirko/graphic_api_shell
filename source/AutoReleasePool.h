@@ -13,8 +13,8 @@ namespace GAS
 	public:
 
 		AutoReleasePool();
-		virtual ~AutoReleasePool();
 		MAKE_UNCOPYABLE(AutoReleasePool);
+		virtual ~AutoReleasePool();
 
 		void addRef( Ref* ref );
 

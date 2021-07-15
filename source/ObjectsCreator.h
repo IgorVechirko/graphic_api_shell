@@ -12,9 +12,10 @@ namespace GAS
 	public:
 
 		ObjectsCreator();
+		MAKE_UNCOPYABLE( ObjectsCreator );
 		virtual ~ObjectsCreator();
 
-		MAKE_UNCOPYABLE( ObjectsCreator );
+		
 
 		template< typename ObjType, typename... Types >
 		ObjType* createObject( const Types&... contructArgs )

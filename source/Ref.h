@@ -11,8 +11,9 @@ namespace GAS
 	public:
 		
 		Ref();
-		virtual ~Ref();
 		MAKE_UNCOPYABLE(Ref);
+		virtual ~Ref();
+		
 
 		void release();
 		void retain();

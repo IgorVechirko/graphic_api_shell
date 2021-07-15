@@ -16,6 +16,9 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
+#include <assert.h>
+
+#define _ASSERT( __arg__ ) assert( __arg__ );
 
 #define MAKE_UNCOPYABLE(__TYPE__)\
 __TYPE__( const __TYPE__& ) = delete;\

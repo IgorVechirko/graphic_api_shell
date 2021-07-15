@@ -13,9 +13,9 @@ namespace GAS
 	public:
 
 		Allocator();
+		MAKE_UNCOPYABLE( Allocator );
 		virtual ~Allocator();
 
-		MAKE_UNCOPYABLE( Allocator );
 
 		void* allocate( size_t size );
 		void deallocate( void* ptr );

@@ -13,9 +13,10 @@ namespace GAS
 	public:
 
 		GASStartClass();
+		MAKE_UNCOPYABLE(GASStartClass);
 		virtual ~GASStartClass();
 
-		MAKE_UNCOPYABLE(GASStartClass);
+		
 		//not copyable class
 		/*GASStartClass( const GASStartClass& inst ) = delete;
 		GASStartClass( GASStartClass&& inst ) = delete;

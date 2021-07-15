@@ -13,10 +13,27 @@ set( Class ${GAS_SRC_DIR}/GASStartClass.cpp ${GAS_SRC_DIR}/GASStartClass.h )
 set( Common ${GAS_SRC_DIR}/Common.h ${GAS_SRC_DIR}/Common.cpp )
 
 set( Allocator ${GAS_SRC_DIR}/Allocator.h ${GAS_SRC_DIR}/Allocator.cpp )
-set( ObjectsCreator ${GAS_SRC_DIR}/ObjectsCreator.h ${GAS_SRC_DIR}/ObjectsCreator.cpp )
 set( Ref ${GAS_SRC_DIR}/Ref.h ${GAS_SRC_DIR}/Ref.cpp )
 set( AutoReleasePool ${GAS_SRC_DIR}/AutoReleasePool.h ${GAS_SRC_DIR}/AutoReleasePool.cpp )
 
+set( ObjectsCreator ${GAS_SRC_DIR}/ObjectsCreator.h ${GAS_SRC_DIR}/ObjectsCreator.cpp )
+set( FactoryBase ${GAS_SRC_DIR}/FactoryBase.h ${GAS_SRC_DIR}/FactoryBase.cpp )
+
+set( WorkingScope ${GAS_SRC_DIR}/WorkingScope.h ${GAS_SRC_DIR}/WorkingScope.cpp )
+set( WorkingScopeProvider ${GAS_SRC_DIR}/WorkingScopeProvider.h ${GAS_SRC_DIR}/WorkingScopeProvider.cpp )
+set( WorkingScopeDelegate ${GAS_SRC_DIR}/WorkingScopeDelegate.h )
+
+
+#windows sources
+
+if( MSVC )
+    list( APPEND WorkingScope ${GAS_SRC_DIR}/WorkingScopeWindows.cpp )
+
+    list( APPEND FactoryBase ${GAS_SRC_DIR}/WindowsFactory.h ${GAS_SRC_DIR}/WindowsFactory.cpp )
+
+endif()
+
+#create project groups
 source_group( common FILES 
                             ${Class}
                             ${Common}
@@ -24,20 +41,37 @@ source_group( common FILES
 
 source_group( memory_managment FILES 
                                     ${Allocator}
-                                    ${ObjectsCreator}
                                     ${Ref}
                                     ${AutoReleasePool}
 )
 
+source_group( working_scope FILES 
+                                ${WorkingScope}
+                                ${WorkingScopeProvider}
+                                ${WorkingScopeDelegate}
+)
+
+source_group( objects_create FILES
+                                    ${FactoryBase}
+                                    ${ObjectsCreator}
+)
 
 set( GAS_SRC 
              ${Class}
              ${Common}
+
              ${Allocator}
-             ${ObjectsCreator}
              ${Ref}
              ${AutoReleasePool}
+
+             ${WorkingScope}
+             ${WorkingScopeProvider}
+             ${WorkingScopeDelegate}
+
+             ${FactoryBase}
+             ${ObjectsCreator}
 )
+
 
 #setup project
 add_library( graphic_api_shell STATIC ${GAS_SRC} )
