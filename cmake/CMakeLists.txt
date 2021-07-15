@@ -29,7 +29,7 @@ set( WorkingScopeDelegate ${GAS_SRC_DIR}/WorkingScopeDelegate.h )
 if( MSVC )
     list( APPEND WorkingScope ${GAS_SRC_DIR}/WorkingScopeWindows.cpp )
 
-    list( APPEND FactoryBase ${GAS_SRC_DIR}/WindowsFactory.h ${GAS_SRC_DIR}/WindowsFactory.cpp )
+    list( APPEND FactoryBase ${GAS_SRC_DIR}/D3DWindowsFactory.h ${GAS_SRC_DIR}/D3DWindowsFactory.cpp )
 
 endif()
 
