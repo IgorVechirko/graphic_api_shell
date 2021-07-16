@@ -7,6 +7,7 @@
 #include "FactoryBase.h"
 #include "ObjectsCreator.h"
 #include "AutoReleasePool.h"
+#include "Scheduler.h"
 
 namespace GAS
 {	
@@ -29,6 +30,8 @@ namespace GAS
 
 		AutoReleasePool* getReleasePool();
 
+		Scheduler* getScheduler();
+
 	private:
 
 		FactoryBase* createFactory();
@@ -43,7 +46,7 @@ namespace GAS
 
 		std::unique_ptr<AutoReleasePool> auto_release_pool_;
 
-
+		std::unique_ptr<Scheduler> scheduler_;
 	};
 
 }

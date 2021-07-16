@@ -1,12 +1,12 @@
 #include "WorkingScope.h"
 
-#include "WindowsFactory.h"
+#include "D3DWindowsFactory.h"
 
 namespace GAS
 {
 
 	FactoryBase* WorkingScope::createFactory()
 	{
-		return new WindowsFactory();
+		return new D3DWindowsFactory();
 	}
 }

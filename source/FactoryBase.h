@@ -5,6 +5,7 @@
 
 #include "ObjectsCreator.h"
 #include "AutoReleasePool.h"
+#include "Scheduler.h"
 
 namespace GAS
 {
@@ -21,6 +22,8 @@ namespace GAS
 		ObjectsCreator* createObjectsCreator();
 
 		AutoReleasePool* createAutoReleasePool();
+
+		Scheduler* createScheduler();
 
 	};
 

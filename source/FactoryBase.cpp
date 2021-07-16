@@ -20,4 +20,9 @@ namespace GAS
 	{
 		return new AutoReleasePool();
 	}
+
+	Scheduler* FactoryBase::createScheduler()
+	{
+		return new Scheduler();
+	}
 }

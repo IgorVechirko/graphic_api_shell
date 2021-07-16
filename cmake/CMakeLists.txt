@@ -23,6 +23,8 @@ set( WorkingScope ${GAS_SRC_DIR}/WorkingScope.h ${GAS_SRC_DIR}/WorkingScope.cpp 
 set( WorkingScopeProvider ${GAS_SRC_DIR}/WorkingScopeProvider.h ${GAS_SRC_DIR}/WorkingScopeProvider.cpp )
 set( WorkingScopeDelegate ${GAS_SRC_DIR}/WorkingScopeDelegate.h )
 
+set( Scheduler ${GAS_SRC_DIR}/Scheduler.h ${GAS_SRC_DIR}/Scheduler.cpp )
+
 
 #windows sources
 
@@ -56,6 +58,10 @@ source_group( objects_create FILES
                                     ${ObjectsCreator}
 )
 
+source_group( scheduler FILES
+                                ${Scheduler}
+)
+
 set( GAS_SRC 
              ${Class}
              ${Common}
@@ -70,6 +76,8 @@ set( GAS_SRC
 
              ${FactoryBase}
              ${ObjectsCreator}
+
+             ${Scheduler}
 )
 
 

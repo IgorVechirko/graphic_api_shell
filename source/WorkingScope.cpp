@@ -20,6 +20,8 @@ namespace GAS
 		creator_.reset( factory_->createObjectsCreator() );
 
 		auto_release_pool_.reset( factory_->createAutoReleasePool() );
+
+		scheduler_.reset( factory_->createScheduler() );
 	}
 
 	WorkingScope::~WorkingScope()
@@ -44,5 +46,10 @@ namespace GAS
 	AutoReleasePool* WorkingScope::getReleasePool()
 	{
 		return auto_release_pool_.get();
+	}
+
+	Scheduler* WorkingScope::getScheduler()
+	{
+		return scheduler_.get();
 	}
 }
