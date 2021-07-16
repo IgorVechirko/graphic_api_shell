@@ -19,7 +19,7 @@
 #include <assert.h>
 #include <chrono>
 
-#define _ASSERT( __arg__ ) assert( __arg__ );
+//#define _ASSERT( __arg__ ) assert( __arg__ );
 
 #define MAKE_UNCOPYABLE(__TYPE__)\
 __TYPE__( const __TYPE__& ) = delete;\

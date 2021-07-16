@@ -24,7 +24,7 @@ namespace GAS
 				}
 			}
 
-			update_routines_.push_back( sUpdateRoutine{ target, func } );
+			update_routines_.push_back( sUpdateRoutine{ func, target } );
 		}
 	}
 		

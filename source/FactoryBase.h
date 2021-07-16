@@ -3,6 +3,7 @@
 
 #include "Common.h"
 
+#include "WorkingScopeProvider.h"
 #include "ObjectsCreator.h"
 #include "AutoReleasePool.h"
 #include "Scheduler.h"
@@ -10,7 +11,7 @@
 namespace GAS
 {
 
-	class FactoryBase
+	class FactoryBase : public WorkingScopeProvider
 	{
 
 	public:

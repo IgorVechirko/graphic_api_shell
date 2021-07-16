@@ -14,14 +14,17 @@ namespace GAS
 		// in any way create delegate to prevent in future pointer checking
 		delegate_.reset( scope_delegate ? scope_delegate : new WorkingScopeDelegate() );
 
-		auto factory = delegate_->createFactoryHook();
+		auto factory = delegate_->createFactoryHook(this);
 		factory_.reset( factory ? factory : createFactory() );
 
 		creator_.reset( factory_->createObjectsCreator() );
+		creator_->setScope(this);
 
 		auto_release_pool_.reset( factory_->createAutoReleasePool() );
+		auto_release_pool_->setScope(this);
 
 		scheduler_.reset( factory_->createScheduler() );
+		scheduler_->setScope(this);
 	}
 
 	WorkingScope::~WorkingScope()

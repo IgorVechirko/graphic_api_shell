@@ -3,12 +3,15 @@
 
 #include "Common.h"
 
+#include "WorkingScopeProvider.h"
+
 namespace GAS
 {
 
 	typedef std::function<void(float)> UpdateFunc;
 
 	class Scheduler
+		: public WorkingScopeProvider
 	{
 
 	public:
@@ -26,6 +29,11 @@ namespace GAS
 		{
 			void* target_;
 			UpdateFunc func_;
+
+			sUpdateRoutine()
+				: sUpdateRoutine(nullptr, nullptr)
+			{
+			}
 
 			sUpdateRoutine( UpdateFunc func, void* target )
 				: target_{ target }

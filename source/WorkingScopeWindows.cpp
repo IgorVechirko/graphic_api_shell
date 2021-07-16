@@ -7,6 +7,10 @@ namespace GAS
 
 	FactoryBase* WorkingScope::createFactory()
 	{
-		return new D3DWindowsFactory();
+		auto factory = new D3DWindowsFactory();
+		factory->setScope( this );
+		
+		return factory;
 	}
+
 }

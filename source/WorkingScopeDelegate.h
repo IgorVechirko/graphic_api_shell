@@ -8,6 +8,7 @@
 namespace GAS
 {
 
+	class WorkingScope;
 	class WorkingScopeDelegate
 	{
 
@@ -16,7 +17,7 @@ namespace GAS
 		WorkingScopeDelegate(){}
 		virtual ~WorkingScopeDelegate(){};
 
-		virtual FactoryBase* createFactoryHook(){ return nullptr; };
+		virtual FactoryBase* createFactoryHook( WorkingScope* scope ){ return nullptr; };
 
 	};
 

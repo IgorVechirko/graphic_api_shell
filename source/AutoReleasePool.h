@@ -3,11 +3,13 @@
 
 #include "Common.h"
 #include "Ref.h"
+#include "WorkingScopeProvider.h"
 
 namespace GAS
 {
 
 	class AutoReleasePool
+		: public WorkingScopeProvider
 	{
 
 	public:

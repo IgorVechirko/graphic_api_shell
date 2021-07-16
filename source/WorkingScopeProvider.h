@@ -22,6 +22,8 @@ namespace GAS
 		WorkingScopeProvider& operator= ( const WorkingScopeProvider& provider );
 		virtual ~WorkingScopeProvider();
 
+		void setScope( WorkingScope* scope );
+		void setScope( WorkingScopeProvider* provider );
 		WorkingScope* getScope();
 
 	protected:

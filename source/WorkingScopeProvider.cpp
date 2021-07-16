@@ -10,7 +10,7 @@ namespace GAS
 
 	WorkingScopeProvider::WorkingScopeProvider( WorkingScope* scope )
 	{
-		_ASSERT( scope );
+		assert( scope );
 
 		scope_ = scope;
 	}
@@ -29,6 +29,16 @@ namespace GAS
 
 	WorkingScopeProvider::~WorkingScopeProvider()
 	{
+	}
+
+	void WorkingScopeProvider::setScope( WorkingScope* scope )
+	{
+		scope_ = scope;
+	}
+
+	void WorkingScopeProvider::setScope( WorkingScopeProvider* provider )
+	{
+		scope_ = provider->getScope();
 	}
 
 	WorkingScope* WorkingScopeProvider::getScope()

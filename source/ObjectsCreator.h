@@ -3,10 +3,13 @@
 
 #include "Common.h"
 #include "Allocator.h"
+#include "WorkingScopeProvider.h"
 
 namespace GAS
 {
-	class ObjectsCreator : public Allocator
+	class ObjectsCreator 
+		: public Allocator
+		, public WorkingScopeProvider
 	{
 
 	public:
