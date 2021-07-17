@@ -12,7 +12,7 @@ namespace GAS
 	{
 	}
 
-	void Scheduler::addUpdateFunc( UpdateFunc func, void* target )
+	void Scheduler::addUpdateFunc( updateFunc func, void* target )
 	{
 		if ( func && target )
 		{

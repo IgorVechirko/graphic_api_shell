@@ -2,7 +2,6 @@
 #define GAS_WorkingScopeProvider_H
 
 #include "Common.h"
-//#include "WorkingScope.h"
 
 namespace GAS
 {
@@ -12,6 +11,8 @@ namespace GAS
 	{
 
 	protected:
+
+		virtual void onSocpeSeted( WorkingScope* scope ) {};
 
 
 	public:

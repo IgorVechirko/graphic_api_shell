@@ -5,7 +5,7 @@
 
 namespace GAS
 {
-	static LogLevel log_level{ LogLevel::kFirst };
+	static LogLevel log_level{ LogLevel::kSecond };
 	static unsigned int log_masks{ 0x0 };
 	static std::mutex log_lock;
 

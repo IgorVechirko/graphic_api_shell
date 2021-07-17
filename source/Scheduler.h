@@ -8,7 +8,7 @@
 namespace GAS
 {
 
-	typedef std::function<void(float)> UpdateFunc;
+	typedef std::function<void(float)> updateFunc;
 
 	class Scheduler
 		: public WorkingScopeProvider
@@ -20,7 +20,7 @@ namespace GAS
 		MAKE_UNCOPYABLE(Scheduler)
 		virtual ~Scheduler();
 
-		void addUpdateFunc( UpdateFunc func, void* target );
+		void addUpdateFunc( updateFunc func, void* target );
 		void delUpdateFunc( void* target );
 
 	private:
@@ -28,14 +28,14 @@ namespace GAS
 		struct sUpdateRoutine
 		{
 			void* target_;
-			UpdateFunc func_;
+			updateFunc func_;
 
 			sUpdateRoutine()
 				: sUpdateRoutine(nullptr, nullptr)
 			{
 			}
 
-			sUpdateRoutine( UpdateFunc func, void* target )
+			sUpdateRoutine( updateFunc func, void* target )
 				: target_{ target }
 				, func_{ func }
 			{

@@ -5,6 +5,7 @@ namespace GAS
 
 	Ref::Ref()
 		: reference_count_{ 0 }
+		, dealloc_func_{ nullptr }
 	{
 	}
 
@@ -32,5 +33,15 @@ namespace GAS
 	unsigned int Ref::getRefsCount()
 	{
 		return reference_count_;
+	}
+
+	void Ref::setDeallocFunc( deallocFunc dealloc_func )
+	{
+		dealloc_func_ = dealloc_func;
+	}
+
+	deallocFunc Ref::getDeallocFunc()
+	{
+		return dealloc_func_;
 	}
 }

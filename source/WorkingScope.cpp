@@ -13,6 +13,7 @@ namespace GAS
 	{
 		// in any way create delegate to prevent in future pointer checking
 		delegate_.reset( scope_delegate ? scope_delegate : new WorkingScopeDelegate() );
+		delegate_->setScope( this );
 
 		auto factory = delegate_->createFactoryHook(this);
 		factory_.reset( factory ? factory : createFactory() );
@@ -25,6 +26,9 @@ namespace GAS
 
 		scheduler_.reset( factory_->createScheduler() );
 		scheduler_->setScope(this);
+
+		file_utils_.reset( factory->createFileUtils() );
+		file_utils_->setScope( this );
 	}
 
 	WorkingScope::~WorkingScope()
@@ -33,6 +37,8 @@ namespace GAS
 
 	int WorkingScope::run()
 	{
+		delegate_->onBeforeRun();
+
 		return 0;
 	}
 	
@@ -41,7 +47,7 @@ namespace GAS
 		return  factory_.get();
 	}
 
-	ObjectsCreator* WorkingScope::getCreator()
+	ScopeObjectsCreator* WorkingScope::getCreator()
 	{
 		return creator_.get();
 	}
@@ -54,5 +60,10 @@ namespace GAS
 	Scheduler* WorkingScope::getScheduler()
 	{
 		return scheduler_.get();
+	}
+
+	FileUtils* WorkingScope::getFileUtils()
+	{
+		return file_utils_.get();
 	}
 }

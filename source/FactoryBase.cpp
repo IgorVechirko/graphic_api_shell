@@ -11,9 +11,9 @@ namespace GAS
 	{
 	}
 
-	ObjectsCreator* FactoryBase::createObjectsCreator()
+	ScopeObjectsCreator* FactoryBase::createObjectsCreator()
 	{
-		return new ObjectsCreator();
+		return new ScopeObjectsCreator();
 	}
 
 	AutoReleasePool* FactoryBase::createAutoReleasePool()
@@ -24,5 +24,10 @@ namespace GAS
 	Scheduler* FactoryBase::createScheduler()
 	{
 		return new Scheduler();
+	}
+
+	FileUtils* FactoryBase::createFileUtils()
+	{
+		return new FileUtils();
 	}
 }

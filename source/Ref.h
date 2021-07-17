@@ -3,8 +3,12 @@
 
 #include "Common.h"
 
+
 namespace GAS
 {
+	class Ref;
+	typedef std::function<void(void*)> deallocFunc;
+
 	class Ref
 	{
 
@@ -20,9 +24,14 @@ namespace GAS
 
 		unsigned int getRefsCount();
 
+		void setDeallocFunc( deallocFunc dealloc_func );
+		deallocFunc getDeallocFunc();
+
 	private:
 
 		unsigned int reference_count_;
+
+		deallocFunc dealloc_func_;
 
 	};
 

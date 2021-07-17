@@ -24,6 +24,9 @@ namespace GAS
 
 	void Allocator::deallocate( void* ptr )
 	{
+		if (!ptr)
+			return;
+
 		if( allocations_count_ == 0 )
 		{
 			LOG_ERROR( "Deallocations calls more times then allocations." );

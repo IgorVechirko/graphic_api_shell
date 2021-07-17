@@ -16,8 +16,9 @@ set( Allocator ${GAS_SRC_DIR}/Allocator.h ${GAS_SRC_DIR}/Allocator.cpp )
 set( Ref ${GAS_SRC_DIR}/Ref.h ${GAS_SRC_DIR}/Ref.cpp )
 set( AutoReleasePool ${GAS_SRC_DIR}/AutoReleasePool.h ${GAS_SRC_DIR}/AutoReleasePool.cpp )
 
-set( ObjectsCreator ${GAS_SRC_DIR}/ObjectsCreator.h ${GAS_SRC_DIR}/ObjectsCreator.cpp )
+set( ScopeObjectsCreator ${GAS_SRC_DIR}/ScopeObjectsCreator.h ${GAS_SRC_DIR}/ScopeObjectsCreator.cpp )
 set( FactoryBase ${GAS_SRC_DIR}/FactoryBase.h ${GAS_SRC_DIR}/FactoryBase.cpp )
+set( AutoRef ${GAS_SRC_DIR}/AutoRef.h )
 
 set( WorkingScope ${GAS_SRC_DIR}/WorkingScope.h ${GAS_SRC_DIR}/WorkingScope.cpp )
 set( WorkingScopeProvider ${GAS_SRC_DIR}/WorkingScopeProvider.h ${GAS_SRC_DIR}/WorkingScopeProvider.cpp )
@@ -25,6 +26,10 @@ set( WorkingScopeDelegate ${GAS_SRC_DIR}/WorkingScopeDelegate.h )
 
 set( Scheduler ${GAS_SRC_DIR}/Scheduler.h ${GAS_SRC_DIR}/Scheduler.cpp )
 
+set( FileUtils ${GAS_SRC_DIR}/FileUtils.h ${GAS_SRC_DIR}/FileUtils.cpp )
+set( File ${GAS_SRC_DIR}/File.h ${GAS_SRC_DIR}/File.cpp )
+
+set( DataBuff ${GAS_SRC_DIR}/DataBuff.h ${GAS_SRC_DIR}/DataBuff.cpp )
 
 #windows sources
 
@@ -55,11 +60,21 @@ source_group( working_scope FILES
 
 source_group( objects_create FILES
                                     ${FactoryBase}
-                                    ${ObjectsCreator}
+                                    ${ScopeObjectsCreator}
+                                    ${AutoRef}
 )
 
 source_group( scheduler FILES
                                 ${Scheduler}
+)
+
+source_group( resources FILES 
+                                ${FileUtils}
+                                ${File}
+)
+
+source_group( data_structures FILES
+                                ${DataBuff}
 )
 
 set( GAS_SRC 
@@ -75,9 +90,15 @@ set( GAS_SRC
              ${WorkingScopeDelegate}
 
              ${FactoryBase}
-             ${ObjectsCreator}
+             ${ScopeObjectsCreator}
+             ${AutoRef}
 
              ${Scheduler}
+
+             ${FileUtils}
+             ${File}
+
+             ${DataBuff}
 )
 
 

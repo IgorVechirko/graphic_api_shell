@@ -5,9 +5,10 @@
 
 #include "WorkingScopeDelegate.h"
 #include "FactoryBase.h"
-#include "ObjectsCreator.h"
+#include "ScopeObjectsCreator.h"
 #include "AutoReleasePool.h"
 #include "Scheduler.h"
+#include "FileUtils.h"
 
 namespace GAS
 {	
@@ -26,11 +27,13 @@ namespace GAS
 
 		FactoryBase* getFactory();
 
-		ObjectsCreator* getCreator();
+		ScopeObjectsCreator* getCreator();
 
 		AutoReleasePool* getReleasePool();
 
 		Scheduler* getScheduler();
+
+		FileUtils* getFileUtils();
 
 	private:
 
@@ -42,11 +45,13 @@ namespace GAS
 
 		std::unique_ptr<FactoryBase> factory_;
 
-		std::unique_ptr<ObjectsCreator> creator_;
+		std::unique_ptr<ScopeObjectsCreator> creator_;
 
 		std::unique_ptr<AutoReleasePool> auto_release_pool_;
 
 		std::unique_ptr<Scheduler> scheduler_;
+
+		std::unique_ptr<FileUtils> file_utils_;
 	};
 
 }

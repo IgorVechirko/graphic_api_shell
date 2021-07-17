@@ -3,6 +3,7 @@
 
 #include "Common.h"
 
+#include "WorkingScopeProvider.h"
 #include "FactoryBase.h"
 
 namespace GAS
@@ -10,6 +11,7 @@ namespace GAS
 
 	class WorkingScope;
 	class WorkingScopeDelegate
+		: public WorkingScopeProvider
 	{
 
 	public:
@@ -18,6 +20,7 @@ namespace GAS
 		virtual ~WorkingScopeDelegate(){};
 
 		virtual FactoryBase* createFactoryHook( WorkingScope* scope ){ return nullptr; };
+		virtual void onBeforeRun(){};
 
 	};
 

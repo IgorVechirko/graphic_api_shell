@@ -4,9 +4,10 @@
 #include "Common.h"
 
 #include "WorkingScopeProvider.h"
-#include "ObjectsCreator.h"
+#include "ScopeObjectsCreator.h"
 #include "AutoReleasePool.h"
 #include "Scheduler.h"
+#include "FileUtils.h"
 
 namespace GAS
 {
@@ -20,11 +21,13 @@ namespace GAS
 		MAKE_UNCOPYABLE( FactoryBase );
 		virtual ~FactoryBase();
 
-		ObjectsCreator* createObjectsCreator();
+		ScopeObjectsCreator* createObjectsCreator();
 
 		AutoReleasePool* createAutoReleasePool();
 
 		Scheduler* createScheduler();
+
+		FileUtils* createFileUtils();
 
 	};
 

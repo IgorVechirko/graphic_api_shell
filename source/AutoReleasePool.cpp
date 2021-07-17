@@ -9,10 +9,9 @@ namespace GAS
 
 	AutoReleasePool::~AutoReleasePool()
 	{
-		while( refs_pool_.size() )
+		for( int ref_indx = 0; ref_indx < refs_pool_.size(); ++ref_indx )
 		{
-			auto ref = (*refs_pool_.cbegin());
-			refs_pool_.resize( refs_pool_.size() - 1 );
+			auto ref = refs_pool_[ref_indx];
 
 			auto referencesCount = ref->getRefsCount();
 			
@@ -24,7 +23,14 @@ namespace GAS
 			while(ref->getRefsCount())
 				ref->release();
 
-			//free object through working scope allocator
+			auto deallocateFunc = ref->getDeallocFunc();
+
+			ref->~Ref();
+
+			if ( deallocateFunc )
+				deallocateFunc(ref);
+			else
+				delete ref;
 		}
 	}
 
