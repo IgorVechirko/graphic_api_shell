@@ -8,8 +8,6 @@ set( GAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 #sources
 set( GAS_SRC_DIR ${GAS_DIR}/source )
 
-set( Class ${GAS_SRC_DIR}/GASStartClass.cpp ${GAS_SRC_DIR}/GASStartClass.h )
-
 set( Common ${GAS_SRC_DIR}/Common.h ${GAS_SRC_DIR}/Common.cpp )
 
 set( Allocator ${GAS_SRC_DIR}/Allocator.h ${GAS_SRC_DIR}/Allocator.cpp )
@@ -42,7 +40,6 @@ endif()
 
 #create project groups
 source_group( common FILES 
-                            ${Class}
                             ${Common}
 )
 
@@ -78,7 +75,6 @@ source_group( data_structures FILES
 )
 
 set( GAS_SRC 
-             ${Class}
              ${Common}
 
              ${Allocator}
