@@ -29,6 +29,9 @@ set( File ${GAS_SRC_DIR}/File.h ${GAS_SRC_DIR}/File.cpp )
 
 set( DataBuff ${GAS_SRC_DIR}/DataBuff.h ${GAS_SRC_DIR}/DataBuff.cpp )
 
+set( SceneBase ${GAS_SRC_DIR}/SceneBase.h ${GAS_SRC_DIR}/SceneBase.cpp )
+set( Camera ${GAS_SRC_DIR}/Camera.h ${GAS_SRC_DIR}/Camera.cpp )
+
 #windows sources
 
 if( MSVC )
@@ -74,6 +77,11 @@ source_group( data_structures FILES
                                 ${DataBuff}
 )
 
+source_group( scene FILES
+                            ${SceneBase}
+                            ${Camera}
+)
+
 set( GAS_SRC 
              ${Common}
 
@@ -95,6 +103,9 @@ set( GAS_SRC
              ${File}
 
              ${DataBuff}
+
+             ${SceneBase}
+             ${Camera}
 )
 
 

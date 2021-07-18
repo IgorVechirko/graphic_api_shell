@@ -10,6 +10,7 @@ namespace GAS
 	}
 
 	WorkingScope::WorkingScope( WorkingScopeDelegate* scope_delegate )
+		: scene_( nullptr )
 	{
 		// in any way create delegate to prevent in future pointer checking
 		delegate_.reset( scope_delegate ? scope_delegate : new WorkingScopeDelegate() );
@@ -33,6 +34,10 @@ namespace GAS
 
 	WorkingScope::~WorkingScope()
 	{
+		if ( scene_ )
+			scene_->release();
+
+		scene_ = nullptr;
 	}
 
 	int WorkingScope::run()
@@ -65,5 +70,21 @@ namespace GAS
 	FileUtils* WorkingScope::getFileUtils()
 	{
 		return file_utils_.get();
+	}
+
+	void WorkingScope::setScene( SceneBase* scene )
+	{
+		if ( scene_ )
+			scene_->release();
+
+		scene_ = scene;
+
+		if ( scene_ )
+			scene_->retain();
+	}
+	
+	AutoRef<SceneBase> WorkingScope::getScene() const
+	{
+		return scene_;
 	}
 }

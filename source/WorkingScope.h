@@ -3,12 +3,15 @@
 
 #include "Common.h"
 
+#include "AutoRef.h"
+
 #include "WorkingScopeDelegate.h"
 #include "FactoryBase.h"
 #include "ScopeObjectsCreator.h"
 #include "AutoReleasePool.h"
 #include "Scheduler.h"
 #include "FileUtils.h"
+#include "SceneBase.h"
 
 namespace GAS
 {	
@@ -35,6 +38,9 @@ namespace GAS
 
 		FileUtils* getFileUtils();
 
+		void setScene( SceneBase* scene );
+		AutoRef<SceneBase> getScene() const;
+
 	private:
 
 		FactoryBase* createFactory();
@@ -52,6 +58,8 @@ namespace GAS
 		std::unique_ptr<Scheduler> scheduler_;
 
 		std::unique_ptr<FileUtils> file_utils_;
+
+		SceneBase* scene_;
 	};
 
 }

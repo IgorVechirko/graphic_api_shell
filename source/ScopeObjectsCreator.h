@@ -72,7 +72,7 @@ namespace GAS
 					destroyObj( &ret );
 				}
 
-				ret.reset(nullptr)
+				ret.reset(nullptr);
 			}
 			
 			return ret;

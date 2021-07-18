@@ -4,6 +4,7 @@
 #include "WorkingScopeDelegate.h"
 #include "Ref.h"
 #include "FileUtils.h"
+#include "SceneBase.h"
 
 class Foo : public GAS::Ref
 {
@@ -28,14 +29,9 @@ public:
 
 	virtual void onBeforeRun() override
 	{
-		auto fooObj = getScope()->getCreator()->createObject<Foo>();
+		auto sceneRef = getScope()->getCreator()->createAndInitObj<GAS::SceneBase>(&GAS::SceneBase::init);
 
-		auto file = getScope()->getFileUtils()->loadFile( "" );
-
-		file->setPath( "" );
-
-		bool stop = true;
-
+		getScope()->setScene( &sceneRef );
 	}
 
 };
