@@ -25,7 +25,7 @@ namespace GAS
 		
 
 		template< typename ObjType, typename... Types >
-		AutoRef<ObjType> createObject( const Types&... contructArgs )
+		AutoRef<ObjType> createObject( const Types&... constructArgs )
 		{
 			AutoRef<ObjType> ret(nullptr);
 
@@ -38,7 +38,7 @@ namespace GAS
 				return nullptr;
 			}
 
-			ret.reset( new(mem) ObjType(contructArgs...) );
+			ret.reset( new(mem) ObjType(constructArgs...) );
 
 			//if object inherite from Ref add it too release pool
 			if ( std::is_base_of<Ref, ObjType>() )
