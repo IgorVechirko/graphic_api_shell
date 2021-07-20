@@ -9,11 +9,12 @@ namespace GAS
 	static unsigned int log_masks{ 0x0 };
 	static std::mutex log_lock;
 
-	char colour_pattern[]{ "\x1B[%dm" };
-	std::map<LogLevel, short> level_to_colour{
-		{LogLevel::kFirst, 31}, // red
-		{LogLevel::kSecond, 33}, // yellow
-		{LogLevel::kThird, 32}, // green
+	static char kColourPattern[]{ "\x1B[%dm" };
+	static char kColourReset[]{ "\033[0m" };
+	std::map<LogLevel, LogTextColour> level_to_colour{
+		{LogLevel::kFirst, LogTextColour::kRed},
+		{LogLevel::kSecond, LogTextColour::kYellow},
+		{LogLevel::kThird, LogTextColour::kGreen},
 	};
 
 	void setLogParams(LogLevel level, unsigned int masks )
@@ -34,10 +35,10 @@ namespace GAS
 				{
 					std::lock_guard<std::mutex> lock_quard(log_lock);
 					auto it = level_to_colour.find(level);
-					short colour_code = it != level_to_colour.end() ? it->second : 37; // default white
-					printf(colour_pattern, colour_code);
+					LogTextColour colour_code = it != level_to_colour.end() ? it->second : LogTextColour::kWhite;
+					printf(kColourPattern, static_cast<int>(colour_code));
 					vprintf(format, var_args);
-					printf( "\033[0m" ); // reset text colour
+					printf(kColourReset);
 					printf( "\n" );
 				}
 
