@@ -45,6 +45,10 @@ int main( int argc, char** argv )
 		ret = scope.run();
 	}
 
+	GAS::LOG_WARNING( "Yellow text" );
+	GAS::LOG_ERROR( "Red text" );
+	GAS::LOG_DEBUG( "Green text" );
+
 	char r;
 	std::cin >> r;
 

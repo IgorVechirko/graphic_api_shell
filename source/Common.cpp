@@ -5,9 +5,17 @@
 
 namespace GAS
 {
-	static LogLevel log_level{ LogLevel::kSecond };
+	static LogLevel log_level{ LogLevel::kThird };
 	static unsigned int log_masks{ 0x0 };
 	static std::mutex log_lock;
+
+	static char kColourPattern[]{ "\x1B[%dm" };
+	static char kColourReset[]{ "\033[0m" };
+	std::map<LogLevel, LogTextColour> level_to_colour{
+		{LogLevel::kFirst, LogTextColour::kRed},
+		{LogLevel::kSecond, LogTextColour::kYellow},
+		{LogLevel::kThird, LogTextColour::kGreen},
+	};
 
 	void setLogParams(LogLevel level, unsigned int masks )
 	{
@@ -26,7 +34,11 @@ namespace GAS
 
 				{
 					std::lock_guard<std::mutex> lock_quard(log_lock);
+					auto it = level_to_colour.find(level);
+					LogTextColour colour_code = it != level_to_colour.end() ? it->second : LogTextColour::kWhite;
+					printf(kColourPattern, static_cast<int>(colour_code));
 					vprintf(format, var_args);
+					printf(kColourReset);
 					printf( "\n" );
 				}
 
