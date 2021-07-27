@@ -106,11 +106,16 @@ set( GAS_SRC
 
              ${SceneBase}
              ${Camera}
+
+             ${ThreadsPool}
+             ${Thread}
 )
 
 
 #setup project
 add_library( graphic_api_shell STATIC ${GAS_SRC} )
+
+set_property( TARGET graphic_api_shell PROPERTY CXX_STANDARD 20 )
 
 target_include_directories( graphic_api_shell PUBLIC ${GAS_SRC_DIR} )
 
@@ -131,6 +136,8 @@ set( FUNC_TESTS_SRC
 
 #setup functional tests project
 add_executable( functional_tests ${FUNC_TESTS_SRC} )
+
+set_property( TARGET functional_tests PROPERTY CXX_STANDARD 20 )
 
 target_link_libraries( functional_tests graphic_api_shell )
 
