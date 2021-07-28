@@ -32,6 +32,9 @@ set( DataBuff ${GAS_SRC_DIR}/DataBuff.h ${GAS_SRC_DIR}/DataBuff.cpp )
 set( SceneBase ${GAS_SRC_DIR}/SceneBase.h ${GAS_SRC_DIR}/SceneBase.cpp )
 set( Camera ${GAS_SRC_DIR}/Camera.h ${GAS_SRC_DIR}/Camera.cpp )
 
+set( ThreadsPool ${GAS_SRC_DIR}/ThreadsPool.h ${GAS_SRC_DIR}/ThreadsPool.cpp )
+set( Thread ${GAS_SRC_DIR}/Thread.h ${GAS_SRC_DIR}/Thread.cpp )
+
 #windows sources
 
 if( MSVC )
@@ -80,6 +83,11 @@ source_group( data_structures FILES
 source_group( scene FILES
                             ${SceneBase}
                             ${Camera}
+)
+
+source_group( threads FILES 
+                            ${ThreadsPool}
+                            ${Thread}
 )
 
 set( GAS_SRC 

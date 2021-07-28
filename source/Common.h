@@ -14,8 +14,12 @@
 #include <functional>
 #include <algorithm>
 #include <memory>
+#include <thread>
+#include <future>
 #include <atomic>
 #include <mutex>
+#include <shared_mutex>
+#include <semaphore>
 #include <assert.h>
 #include <chrono>
 

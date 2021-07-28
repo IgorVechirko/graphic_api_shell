@@ -30,4 +30,9 @@ namespace GAS
 	{
 		return new FileUtils();
 	}
+
+	ThreadsPool* FactoryBase::createThreadsPool()
+	{
+		return new ThreadsPool();
+	}
 }

@@ -8,6 +8,7 @@
 #include "AutoReleasePool.h"
 #include "Scheduler.h"
 #include "FileUtils.h"
+#include "ThreadsPool.h"
 
 namespace GAS
 {
@@ -28,6 +29,8 @@ namespace GAS
 		Scheduler* createScheduler();
 
 		FileUtils* createFileUtils();
+
+		ThreadsPool* createThreadsPool();
 
 	};
 

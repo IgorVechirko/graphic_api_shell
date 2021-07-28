@@ -12,6 +12,7 @@
 #include "Scheduler.h"
 #include "FileUtils.h"
 #include "SceneBase.h"
+#include "ThreadsPool.h"
 
 namespace GAS
 {	
@@ -38,6 +39,8 @@ namespace GAS
 
 		FileUtils* getFileUtils();
 
+		ThreadsPool* getThreadsPool();
+
 		void setScene( SceneBase* scene );
 		AutoRef<SceneBase> getScene() const;
 
@@ -58,6 +61,8 @@ namespace GAS
 		std::unique_ptr<Scheduler> scheduler_;
 
 		std::unique_ptr<FileUtils> file_utils_;
+
+		std::unique_ptr<ThreadsPool> threads_pool_;
 
 		SceneBase* scene_;
 	};

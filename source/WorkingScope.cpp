@@ -30,6 +30,9 @@ namespace GAS
 
 		file_utils_.reset( factory->createFileUtils() );
 		file_utils_->setScope( this );
+
+		threads_pool_.reset( factory->createThreadsPool() );
+		threads_pool_->setScope( this );
 	}
 
 	WorkingScope::~WorkingScope()
@@ -70,6 +73,11 @@ namespace GAS
 	FileUtils* WorkingScope::getFileUtils()
 	{
 		return file_utils_.get();
+	}
+
+	ThreadsPool* WorkingScope::getThreadsPool()
+	{
+		return threads_pool_.get();
 	}
 
 	void WorkingScope::setScene( SceneBase* scene )
