@@ -12,7 +12,7 @@ namespace GAS
 
 	protected:
 
-		virtual void onSocpeSeted( WorkingScope* scope ) {};
+		virtual void onScopeSeted( WorkingScope* scope ) {};
 
 
 	public:

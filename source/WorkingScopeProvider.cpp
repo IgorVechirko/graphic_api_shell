@@ -34,13 +34,13 @@ namespace GAS
 	void WorkingScopeProvider::setScope( WorkingScope* scope )
 	{
 		scope_ = scope;
-		onSocpeSeted( scope_ );
+		onScopeSeted( scope_ );
 	}
 
 	void WorkingScopeProvider::setScope( WorkingScopeProvider* provider )
 	{
 		scope_ = provider->getScope();
-		onSocpeSeted( scope_ );
+		onScopeSeted( scope_ );
 	}
 
 	WorkingScope* WorkingScopeProvider::getScope()
