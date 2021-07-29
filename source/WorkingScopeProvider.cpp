@@ -43,7 +43,7 @@ namespace GAS
 		onScopeSeted( scope_ );
 	}
 
-	WorkingScope* WorkingScopeProvider::getScope()
+	WorkingScope* WorkingScopeProvider::getScope() const
 	{
 		return scope_;
 	}

@@ -50,32 +50,32 @@ namespace GAS
 		return 0;
 	}
 	
-	FactoryBase* WorkingScope::getFactory()
+	FactoryBase* WorkingScope::getFactory() const
 	{
 		return  factory_.get();
 	}
 
-	ScopeObjectsCreator* WorkingScope::getCreator()
+	ScopeObjectsCreator* WorkingScope::getCreator() const
 	{
 		return creator_.get();
 	}
 
-	AutoReleasePool* WorkingScope::getReleasePool()
+	AutoReleasePool* WorkingScope::getReleasePool() const
 	{
 		return auto_release_pool_.get();
 	}
 
-	Scheduler* WorkingScope::getScheduler()
+	Scheduler* WorkingScope::getScheduler() const
 	{
 		return scheduler_.get();
 	}
 
-	FileUtils* WorkingScope::getFileUtils()
+	FileUtils* WorkingScope::getFileUtils() const
 	{
 		return file_utils_.get();
 	}
 
-	ThreadsPool* WorkingScope::getThreadsPool()
+	ThreadsPool* WorkingScope::getThreadsPool() const
 	{
 		return threads_pool_.get();
 	}

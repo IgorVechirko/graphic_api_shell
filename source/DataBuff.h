@@ -21,8 +21,8 @@ namespace GAS
 
 		void init( char* data, size_t data_size );
 
-		char* getData();
-		size_t getDataSize();
+		char* getData() const;
+		size_t getDataSize() const;
 
 	private:
 

@@ -56,7 +56,7 @@ namespace GAS
 		}
 	}
 
-	AutoRef<Thread> ThreadsPool::getThreadByID( unsigned int thread_id )
+	AutoRef<Thread> ThreadsPool::getThreadByID( unsigned int thread_id ) const
 	{
 		for( auto thread : threads_ )
 		{

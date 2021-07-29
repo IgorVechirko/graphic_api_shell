@@ -21,7 +21,7 @@ namespace GAS
 		void setData( DataBuff* buff );
 
 		const DataBuff* getConstData() const;
-		DataBuff* getData();
+		DataBuff* getData() const;
 
 		void setPath( const std::string& path );
 		const std::string& getPath() const;

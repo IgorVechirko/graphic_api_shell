@@ -29,17 +29,17 @@ namespace GAS
 
 		int run();
 
-		FactoryBase* getFactory();
+		FactoryBase* getFactory() const;
 
-		ScopeObjectsCreator* getCreator();
+		ScopeObjectsCreator* getCreator() const;
 
-		AutoReleasePool* getReleasePool();
+		AutoReleasePool* getReleasePool() const;
 
-		Scheduler* getScheduler();
+		Scheduler* getScheduler() const;
 
-		FileUtils* getFileUtils();
+		FileUtils* getFileUtils() const;
 
-		ThreadsPool* getThreadsPool();
+		ThreadsPool* getThreadsPool() const;
 
 		void setScene( SceneBase* scene );
 		AutoRef<SceneBase> getScene() const;

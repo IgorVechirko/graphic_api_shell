@@ -25,7 +25,7 @@ namespace GAS
 
 		void setScope( WorkingScope* scope );
 		void setScope( WorkingScopeProvider* provider );
-		WorkingScope* getScope();
+		WorkingScope* getScope() const;
 
 	protected:
 

@@ -24,7 +24,7 @@ namespace GAS
 		bool stopSync();
 		bool stopAsync();
 
-		unsigned int getID();
+		unsigned int getID() const;
 
 	private:
 

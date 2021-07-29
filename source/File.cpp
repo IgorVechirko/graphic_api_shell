@@ -27,7 +27,7 @@ namespace GAS
 		return data_;
 	}
 
-	DataBuff* File::getData()
+	DataBuff* File::getData() const
 	{
 		return data_;
 	}

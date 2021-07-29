@@ -24,7 +24,7 @@ namespace GAS
 		void removeThread( Thread* thread );
 		void removeThread( unsigned int thread_id );
 
-		AutoRef<Thread> getThreadByID( unsigned int thread_id );
+		AutoRef<Thread> getThreadByID( unsigned int thread_id ) const;
 
 	private:
 

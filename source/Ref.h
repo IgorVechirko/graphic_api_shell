@@ -22,10 +22,10 @@ namespace GAS
 		void release();
 		void retain();
 
-		unsigned int getRefsCount();
+		unsigned int getRefsCount() const;
 
 		void setDeallocFunc( deallocFunc dealloc_func );
-		deallocFunc getDeallocFunc();
+		deallocFunc getDeallocFunc() const;
 
 	private:
 

@@ -30,7 +30,7 @@ namespace GAS
 		++reference_count_;
 	}
 
-	unsigned int Ref::getRefsCount()
+	unsigned int Ref::getRefsCount() const
 	{
 		return reference_count_;
 	}
@@ -40,7 +40,7 @@ namespace GAS
 		dealloc_func_ = dealloc_func;
 	}
 
-	deallocFunc Ref::getDeallocFunc()
+	deallocFunc Ref::getDeallocFunc() const
 	{
 		return dealloc_func_;
 	}

@@ -97,7 +97,7 @@ namespace GAS
 		return true;
 	}
 	
-	unsigned int Thread::getID()
+	unsigned int Thread::getID() const
 	{
 		return ID_;
 	}

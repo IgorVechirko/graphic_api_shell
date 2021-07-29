@@ -22,12 +22,12 @@ namespace GAS
 		data_size_ = data_size;
 	}
 
-	char* DataBuff::getData()
+	char* DataBuff::getData() const
 	{
 		return data_;
 	}
 	
-	size_t DataBuff::getDataSize()
+	size_t DataBuff::getDataSize() const
 	{
 		return data_size_;
 	}
