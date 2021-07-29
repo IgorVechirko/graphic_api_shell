@@ -32,6 +32,7 @@ namespace GAS
 			LOG_ERROR( "Deallocations calls more times then allocations." );
 			return;
 		}
+		
 		--allocations_count_;
 		free(ptr);
 	}

@@ -22,7 +22,7 @@ namespace GAS
 
 	private:
 
-		size_t allocations_count_;
+		std::atomic<size_t> allocations_count_;
 
 	};
 }

@@ -29,7 +29,7 @@ namespace GAS
 
 	private:
 
-		unsigned int reference_count_;
+		std::atomic<unsigned int> reference_count_;
 
 		deallocFunc dealloc_func_;
 

@@ -29,7 +29,7 @@ namespace GAS
 
 	protected:
 
-		WorkingScope* scope_;
+		std::atomic<WorkingScope*> scope_;
 
 	};
 

@@ -20,15 +20,19 @@ namespace GAS
 	AutoRef<Thread> ThreadsPool::createThread()
 	{
 		auto new_thread = getScope()->getCreator()->createObject<Thread>();
-
 		new_thread->retain();
-		threads_.push_back( &new_thread );
+		
+		{
+			std::unique_lock<std::mutex> threads_lock(threads_lock_);
+			threads_.push_back( &new_thread );
+		}
 
 		return new_thread;
 	}
 
 	void ThreadsPool::removeThread( Thread* thread )
 	{
+		std::unique_lock<std::mutex> threads_lock(threads_lock_);
 		for( auto threadIt = threads_.begin(); threadIt != threads_.end(); ++threadIt )
 		{
 			if ( (*threadIt) == thread )
@@ -43,6 +47,7 @@ namespace GAS
 
 	void ThreadsPool::removeThread( unsigned int thread_id )
 	{
+		std::unique_lock<std::mutex> threads_lock(threads_lock_);
 		for( auto threadIt = threads_.begin(); threadIt != threads_.end(); ++threadIt )
 		{
 			if ( (*threadIt)->getID() == thread_id )
@@ -58,6 +63,7 @@ namespace GAS
 
 	AutoRef<Thread> ThreadsPool::getThreadByID( unsigned int thread_id ) const
 	{
+		std::unique_lock<std::mutex> threads_lock(threads_lock_);
 		for( auto thread : threads_ )
 		{
 			if ( thread->getID() == thread_id )

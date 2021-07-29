@@ -65,6 +65,7 @@ namespace GAS
 		std::unique_ptr<ThreadsPool> threads_pool_;
 
 		SceneBase* scene_;
+		std::shared_mutex scene_lock_;
 	};
 
 }

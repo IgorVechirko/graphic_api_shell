@@ -82,6 +82,8 @@ namespace GAS
 
 	void WorkingScope::setScene( SceneBase* scene )
 	{
+		std::unique_lock scene_lock(scene_lock_);
+
 		if ( scene_ )
 			scene_->release();
 
@@ -93,6 +95,9 @@ namespace GAS
 	
 	AutoRef<SceneBase> WorkingScope::getScene() const
 	{
-		return scene_;
+		std::shared_lock scene_lock(scene_lock_);
+		
+		auto ret = scene_;
+		return ret;
 	}
 }
