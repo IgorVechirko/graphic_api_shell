@@ -3,15 +3,14 @@
 
 #include "Common.h"
 
-#include "Ref.h"
-#include "WorkingScopeProvider.h"
+#include "Allocator.h"
+
 
 namespace GAS
 {
 
 	class DataBuff
-		: public Ref
-		, public WorkingScopeProvider
+		: protected Allocator
 	{
 
 	public:
@@ -19,9 +18,10 @@ namespace GAS
 		DataBuff();
 		virtual ~DataBuff();
 
-		void init( char* data, size_t data_size );
+		void allocData( size_t data_size );
+		void deallocData();
 
-		char* getData() const;
+		char* getData( size_t offset = 0) const;
 		size_t getDataSize() const;
 
 	private:
