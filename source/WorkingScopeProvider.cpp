@@ -17,12 +17,12 @@ namespace GAS
 
 	WorkingScopeProvider::WorkingScopeProvider( const WorkingScopeProvider& provider )
 	{
-		scope_ = provider.scope_;
+		scope_.store( provider.scope_ );
 	}
 
 	WorkingScopeProvider& WorkingScopeProvider::operator=( const WorkingScopeProvider& provider )
 	{
-		scope_ = provider.scope_;
+		scope_.store( provider.scope_ );
 
 		return *this;
 	}

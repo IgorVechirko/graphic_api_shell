@@ -14,7 +14,6 @@ namespace GAS
 
 	DataBuff::~DataBuff()
 	{
-		getScope()->getCreator()->deallocate(data_);
 	}
 
 	void DataBuff::allocData( size_t data_size )
@@ -28,7 +27,7 @@ namespace GAS
 
 			data_size_ = data_size;
 
-			data_ = allocate(data_size_);
+			data_ = static_cast<char*>( allocate(data_size_) );
 		}
 	}
 

@@ -29,7 +29,7 @@ namespace GAS
 	private:
 
 		std::vector<Thread*> threads_;
-		std::mutex threads_lock_
+		mutable std::mutex threads_lock_;
 
 	};
 

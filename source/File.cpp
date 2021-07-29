@@ -10,16 +10,11 @@ namespace GAS
 
 	File::~File()
 	{
-		if ( data_ )
-			data_->release();
 	}
 
 	void File::setData( DataBuff* buff )
 	{
 		data_ = buff;
-
-		if ( data_ )
-			data_->retain();
 	}
 
 	const DataBuff* File::getConstData() const
