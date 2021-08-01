@@ -136,10 +136,25 @@ endif()
 
 set( FUNC_TESTS_SRC_DIR ${GAS_DIR}/tests )
 
+#sources
 set( Main ${FUNC_TESTS_SRC_DIR}/main.cpp )
 
+set( TestSceneBase ${FUNC_TESTS_SRC_DIR}/TestSceneBase.h ${FUNC_TESTS_SRC_DIR}/TestSceneBase.cpp )
+
+set( TestsDelegate ${FUNC_TESTS_SRC_DIR}/TestsDelegate.h ${FUNC_TESTS_SRC_DIR}/TestsDelegate.cpp )
+
+set( AutoTestsScene ${FUNC_TESTS_SRC_DIR}/AutoTestsScene.h ${FUNC_TESTS_SRC_DIR}/AutoTestsScene.cpp )
+
+#create project groups
+source_group( tests\\base FILES ${TestSceneBase} )
+source_group( tests\\delegate FILES ${TestsDelegate} )
+source_group( tests FILES ${AutoTestsScene} )
+
 set( FUNC_TESTS_SRC
-                    ${Main} 
+                    ${Main}
+                    ${TestSceneBase}
+                    ${TestsDelegate}
+                    ${AutoTestsScene}
 )
 
 #setup functional tests project

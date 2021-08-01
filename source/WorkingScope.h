@@ -35,7 +35,7 @@ namespace GAS
 
 		AutoReleasePool* getReleasePool() const;
 
-		Scheduler* getScheduler() const;
+		Scheduler* getScheduler() const; 
 
 		FileUtils* getFileUtils() const;
 
@@ -50,13 +50,13 @@ namespace GAS
 
 	private:
 
-		std::unique_ptr<WorkingScopeDelegate> delegate_;
-
 		std::unique_ptr<FactoryBase> factory_;
 
 		std::unique_ptr<ScopeObjectsCreator> creator_;
 
 		std::unique_ptr<AutoReleasePool> auto_release_pool_;
+
+		std::unique_ptr<WorkingScopeDelegate> delegate_;
 
 		std::unique_ptr<Scheduler> scheduler_;
 

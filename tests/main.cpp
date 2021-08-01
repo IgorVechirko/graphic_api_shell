@@ -1,53 +1,19 @@
 #include <iostream>
 
 #include "WorkingScope.h"
-#include "WorkingScopeDelegate.h"
-#include "Ref.h"
-#include "FileUtils.h"
-#include "SceneBase.h"
-
-class Foo : public GAS::Ref
-{
-public:
-
-	Foo(){};
-	virtual ~Foo(){
-	
-		bool stop =true;
-	};
-
-};
-
-class TestDelegate
-	: public GAS::WorkingScopeDelegate
-{
-
-public:
-
-	TestDelegate(){};
-	virtual ~TestDelegate(){};
-
-	virtual void onBeforeRun() override
-	{
-		auto sceneRef = getScope()->getCreator()->createAndInitObj<GAS::SceneBase>(&GAS::SceneBase::init);
-
-		getScope()->setScene( &sceneRef );
-	}
-
-};
+#include "TestsDelegate.h"
 
 int main( int argc, char** argv )
 {
 	int ret = 0;
 	{
-		GAS::WorkingScope scope(new TestDelegate());
+		GAS::WorkingScope scope(new Tests::TestsDelegate());
 
 		ret = scope.run();
 	}
 
-	GAS::LOG_WARNING( "Yellow text" );
-	GAS::LOG_ERROR( "Red text" );
-	GAS::LOG_DEBUG( "Green text" );
+	std::cout << argv[0] << std::endl;
+
 
 	char r;
 	std::cin >> r;

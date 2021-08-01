@@ -17,7 +17,7 @@ namespace GAS
 			
 			if ( referencesCount > 1 )
 			{
-				LOG_WARNING( "Ref %d still have %d references.", ref, referencesCount );
+				LOG_WARNING( "Ref %p still have %d references.", ref, referencesCount );
 			}
 
 			while(ref->getRefsCount())
