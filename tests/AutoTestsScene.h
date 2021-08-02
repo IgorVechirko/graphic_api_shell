@@ -23,6 +23,10 @@ namespace Tests
 		void testAllocator();
 		void testAutoReleasePool();
 		void testAutoRef();
+		void testDataBuff();
+		void testFileUtils();
+		void testThread();
+		void testThreadPool();
 
 	};
 

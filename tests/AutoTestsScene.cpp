@@ -5,6 +5,7 @@
 #include "AutoReleasePool.h"
 #include "WorkingScope.h"
 #include "ScopeObjectsCreator.h"
+#include "DataBuff.h"
 
 namespace Tests
 {
@@ -24,6 +25,8 @@ namespace Tests
 		testAutoReleasePool();
 		GAS::LOG_ERROR( "" );
 		testAutoRef();
+		GAS::LOG_ERROR( "" );
+		testDataBuff();
 		GAS::LOG_ERROR( "" );
 	}
 
@@ -178,5 +181,35 @@ namespace Tests
 			GAS::LOG_ERROR( "Ref object have wrong refs_count after call move constructor" );
 			return;
 		}
+	}
+
+	void AutoTestsScene::testDataBuff()
+	{
+		GAS::FUNC_TRACE;
+		
+		GAS::DataBuff buff;
+
+		size_t data_size = 256;
+		buff.allocData(data_size);
+
+		if( buff.getDataSize() != data_size )
+		{
+			GAS::LOG_ERROR( "Buffer has wrong data size" );
+			return;
+		}
+
+		if ( ( buff.getData() + data_size/2 != buff.getData( data_size/2 ) ) ||
+			 ( buff.getData() + 0 != buff.getData() ) ||
+			 ( buff.getData() + (data_size-1) != buff.getData(data_size-1) )
+			)
+		{
+			GAS::LOG_ERROR( "getData working wrong" );
+			return;
+		}
+
+		buff.allocData( data_size*2 );
+		buff.deallocData();
+		buff.allocData( data_size*3 );
+		buff.allocData( data_size*4 );
 	}
 }

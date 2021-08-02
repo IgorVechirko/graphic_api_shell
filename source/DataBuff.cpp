@@ -9,16 +9,16 @@ namespace GAS
 		: data_( nullptr )
 		, data_size_( 0 )
 	{
-		deallocData();
 	}
 
 	DataBuff::~DataBuff()
 	{
+		deallocData();
 	}
 
 	void DataBuff::allocData( size_t data_size )
 	{
-		if ( data_size < data_size_ )
+		if ( data_size && (data_size > data_size_) )
 		{
 			if ( data_ )
 			{
