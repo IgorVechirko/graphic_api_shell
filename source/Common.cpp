@@ -12,6 +12,22 @@ namespace GAS
 	static unsigned int log_masks{ 0x0 };
 	static std::mutex log_lock;
 
+	enum class NixLogTextColour
+	{
+		kRed = 31,
+		kGreen = 32,
+		kYellow = 33,
+		kWhite = 37
+	};
+
+	enum class WinLogTextColour
+	{
+		kRed = 12,
+		kGreen = 10,
+		kYellow = 14,
+		kWhite = 7
+	};
+
 	static char kColourPattern[]{ "\x1B[%dm" };
 	static char kColourReset[]{ "\033[0m" };
 	#ifdef _WIN32
