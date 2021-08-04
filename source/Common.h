@@ -38,12 +38,20 @@ enum class LogLevel
 	kThird
 };
 
-enum class LogTextColour
+enum class NixLogTextColour
 {
 	kRed = 31,
 	kGreen = 32,
 	kYellow = 33,
 	kWhite = 37
+};
+
+enum class WinLogTextColour
+{
+	kRed = 12,
+	kGreen = 10,
+	kYellow = 14,
+	kWhite = 7
 };
 
 enum class LogMask

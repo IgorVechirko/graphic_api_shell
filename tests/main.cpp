@@ -44,10 +44,11 @@ int main( int argc, char** argv )
 
 		ret = scope.run();
 	}
-
+	std::cout << "regular text" << std::endl;
 	GAS::LOG_WARNING( "Yellow text" );
 	GAS::LOG_ERROR( "Red text" );
 	GAS::LOG_DEBUG( "Green text" );
+	std::cout << "regular text" << std::endl;
 
 	char r;
 	std::cin >> r;
