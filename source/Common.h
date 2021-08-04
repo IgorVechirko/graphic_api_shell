@@ -38,14 +38,6 @@ enum class LogLevel
 	kThird
 };
 
-enum class LogTextColour
-{
-	kRed = 31,
-	kGreen = 32,
-	kYellow = 33,
-	kWhite = 37
-};
-
 enum class LogMask
 {
 	kUniversal = 0x1 << 0
