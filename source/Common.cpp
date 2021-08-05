@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 namespace GAS
 {
 	static LogLevel log_level{ LogLevel::kThird };
@@ -11,7 +15,33 @@ namespace GAS
 
 	static char kColourPattern[]{ "\x1B[%dm" };
 	static char kColourReset[]{ "\033[0m" };
-	std::map<LogLevel, LogTextColour> level_to_colour{
+
+#ifdef _WIN32
+
+	static const HANDLE kHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	enum class LogTextColour
+	{
+		kRed = 12,
+		kGreen = 10,
+		kYellow = 14,
+		kWhite = 7
+	};
+
+#else
+
+	enum class LogTextColour
+	{
+		kRed = 31,
+		kGreen = 32,
+		kYellow = 33,
+		kWhite = 37
+	};
+
+#endif
+
+
+	std::map<LogLevel, LogTextColour> log_level_to_colour{
 		{LogLevel::kFirst, LogTextColour::kRed},
 		{LogLevel::kSecond, LogTextColour::kYellow},
 		{LogLevel::kThird, LogTextColour::kGreen},
@@ -21,6 +51,33 @@ namespace GAS
 	{
 		log_level = level;
 		log_masks = masks;
+	}
+
+	int getLevelColourCode(LogLevel level)
+	{
+		auto findIt = log_level_to_colour.find(level);
+		LogTextColour colour_code = findIt != log_level_to_colour.end() ? findIt->second : LogTextColour::kWhite;
+
+		return static_cast<int>(colour_code);
+	}
+
+	void setLogTextColour(LogLevel level)
+	{
+		auto colour_code = getLevelColourCode(level);
+	#ifdef _WIN32
+		SetConsoleTextAttribute(kHandle, colour_code);
+	#else
+		printf(kColourPattern, colour_code);
+	#endif
+	}
+
+	void resetLogTextColour()
+	{
+	#ifdef _WIN32
+		SetConsoleTextAttribute(kHandle, static_cast<int>(LogTextColour::kWhite));
+	#else
+		printf(kColourReset);
+	#endif
 	}
 
 	void log( LogLevel level, LogMask mask, const char* format, ... )
@@ -34,11 +91,9 @@ namespace GAS
 
 				{
 					std::lock_guard<std::mutex> lock_quard(log_lock);
-					auto it = level_to_colour.find(level);
-					LogTextColour colour_code = it != level_to_colour.end() ? it->second : LogTextColour::kWhite;
-					printf(kColourPattern, static_cast<int>(colour_code));
+					setLogTextColour(level);
 					vprintf(format, var_args);
-					printf(kColourReset);
+					resetLogTextColour();
 					printf( "\n" );
 				}
 

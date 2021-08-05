@@ -11,9 +11,7 @@ int main( int argc, char** argv )
 
 		ret = scope.run();
 	}
-
-	std::cout << argv[0] << std::endl;
-
+	
 	char r;
 	std::cin >> r;
 
