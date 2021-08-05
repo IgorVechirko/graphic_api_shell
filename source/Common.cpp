@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -12,15 +13,14 @@ namespace GAS
 	static unsigned int log_masks{ 0x0 };
 	static std::mutex log_lock;
 
-	enum class NixLogTextColour
-	{
-		kRed = 31,
-		kGreen = 32,
-		kYellow = 33,
-		kWhite = 37
-	};
+	static char kColourPattern[]{ "\x1B[%dm" };
+	static char kColourReset[]{ "\033[0m" };
 
-	enum class WinLogTextColour
+#ifdef _WIN32
+
+	static const HANDLE kHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	enum class LogTextColour
 	{
 		kRed = 12,
 		kGreen = 10,
@@ -28,21 +28,23 @@ namespace GAS
 		kWhite = 7
 	};
 
-	static char kColourPattern[]{ "\x1B[%dm" };
-	static char kColourReset[]{ "\033[0m" };
-	#ifdef _WIN32
-		static const HANDLE kHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	#endif
-	std::map<LogLevel, NixLogTextColour> nix_level_to_colour{
-		{LogLevel::kFirst, NixLogTextColour::kRed},
-		{LogLevel::kSecond, NixLogTextColour::kYellow},
-		{LogLevel::kThird, NixLogTextColour::kGreen},
+#else
+
+	enum class LogTextColour
+	{
+		kRed = 31,
+		kGreen = 32,
+		kYellow = 33,
+		kWhite = 37
 	};
 
-	std::map<LogLevel, WinLogTextColour> win_level_to_colour{
-		{LogLevel::kFirst, WinLogTextColour::kRed},
-		{LogLevel::kSecond, WinLogTextColour::kYellow},
-		{LogLevel::kThird, WinLogTextColour::kGreen},
+#endif
+
+
+	std::map<LogLevel, LogTextColour> log_level_to_colour{
+		{LogLevel::kFirst, LogTextColour::kRed},
+		{LogLevel::kSecond, LogTextColour::kYellow},
+		{LogLevel::kThird, LogTextColour::kGreen},
 	};
 
 	void setLogParams(LogLevel level, unsigned int masks )
@@ -53,19 +55,15 @@ namespace GAS
 
 	int getLevelColourCode(LogLevel level)
 	{
-	#ifdef _WIN32
-		auto it = win_level_to_colour.find(level);
-		WinLogTextColour colour_code = it != win_level_to_colour.end() ? it->second : WinLogTextColour::kWhite;
-	#else
-		auto it = nix_level_to_colour.find(level);
-		NixLogTextColour colour_code = it != nix_level_to_colour.end() ? it->second : NixLogTextColour::kWhite;
-	#endif
+		auto findIt = log_level_to_colour.find(level);
+		LogTextColour colour_code = findIt != log_level_to_colour.end() ? findIt->second : LogTextColour::kWhite;
+
 		return static_cast<int>(colour_code);
 	}
 
 	void setLogTextColour(LogLevel level)
 	{
-		int colour_code = getLevelColourCode(level);
+		auto colour_code = getLevelColourCode(level);
 	#ifdef _WIN32
 		SetConsoleTextAttribute(kHandle, colour_code);
 	#else
@@ -76,7 +74,7 @@ namespace GAS
 	void resetLogTextColour()
 	{
 	#ifdef _WIN32
-		SetConsoleTextAttribute(kHandle, static_cast<int>(WinLogTextColour::kWhite));
+		SetConsoleTextAttribute(kHandle, static_cast<int>(LogTextColour::kWhite));
 	#else
 		printf(kColourReset);
 	#endif
