@@ -47,6 +47,22 @@ namespace GAS
 {
 	void setLogParams(LogLevel level, unsigned int masks );
 	void log( LogLevel level, LogMask mask, const char* format, ... );
+
+	class LogTrace
+	{
+
+	public:
+
+		LogTrace( const std::string& trace_text, LogLevel log_level = LogLevel::kSecond );
+		virtual ~LogTrace();
+
+	private:
+
+		std::string trace_text_;
+		LogLevel log_level_;
+
+	};
+
 }
 
 
@@ -54,5 +70,7 @@ namespace GAS
 #define LOG_ERROR( __FORMAT__, ... ) log( LogLevel::kFirst, LogMask::kUniversal, __FORMAT__, __VA_ARGS__ );
 #define LOG_WARNING( __FORMAT__, ... ) log( LogLevel::kSecond, LogMask::kUniversal, __FORMAT__, __VA_ARGS__ );
 #define LOG_DEBUG( __FORMAT__, ... ) log( LogLevel::kThird, LogMask::kUniversal, __FORMAT__, __VA_ARGS__ );
+
+#define FUNC_TRACE LogTrace trance_func( __FUNCTION__ );
 
 #endif //GAS_Common_H

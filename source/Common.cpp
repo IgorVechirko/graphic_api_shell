@@ -101,4 +101,17 @@ namespace GAS
 			}
 		}
 	}
+
+
+	//class LogTrace
+	LogTrace::LogTrace( const std::string& trace_text, LogLevel log_level )
+		: log_level_( log_level )
+		, trace_text_( trace_text )
+	{
+		log( log_level_, LogMask::kUniversal, ">>> %s", trace_text_.c_str() );
+	}
+	LogTrace::~LogTrace()
+	{
+		log( log_level_, LogMask::kUniversal, "<<< %s", trace_text_.c_str() );
+	}
 }
