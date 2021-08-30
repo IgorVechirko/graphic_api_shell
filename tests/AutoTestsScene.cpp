@@ -6,6 +6,8 @@
 #include "WorkingScope.h"
 #include "ScopeObjectsCreator.h"
 #include "DataBuff.h"
+#include "Thread.h"
+#include "ThreadsPool.h"
 
 namespace Tests
 {
@@ -27,6 +29,8 @@ namespace Tests
 		testAutoRef();
 		GAS::LOG_ERROR( "" );
 		testDataBuff();
+		GAS::LOG_ERROR( "" );
+		testThread();
 		GAS::LOG_ERROR( "" );
 	}
 
@@ -211,5 +215,65 @@ namespace Tests
 		buff.deallocData();
 		buff.allocData( data_size*3 );
 		buff.allocData( data_size*4 );
+	}
+	
+	void AutoTestsScene::testThread()
+	{
+		GAS::FUNC_TRACE;
+
+		//TODO
+		/*{
+			GAS::LogTrace block_trace( "Check executing state" );
+
+			auto thread = getScope()->getCreator()->createObject<GAS::Thread>();
+
+			std::promise<void> checkExecutingStatePromise;
+			std::promise<void> waitFinishCheckExecutinState;
+
+			auto threadRoutine = [&](GAS::ThreadNeedStopFlag& stopFlag){
+				checkExecutingStatePromise.set_value();
+
+				waitFinishCheckExecutinState.get_future().get();
+			};
+
+			thread->executeRoutine( threadRoutine );
+
+			checkExecutingStatePromise.get_future().get();
+
+			GAS::LOG_WARNING( "Thread must gen warning it can't be executin again" );
+
+			thread->executeRoutine( threadRoutine );
+
+			waitFinishCheckExecutinState.set_value();
+		}
+
+		if(0)
+		{
+			GAS::LogTrace block_trace( "Check stopping state" );
+
+			auto thread = getScope()->getCreator()->createObject<GAS::Thread>();
+
+			std::promise<void> waitForContinueStoping;
+			std::promise<void> waitFinishCheckExecutinState;
+
+			auto threadRoutine = [&](GAS::ThreadNeedStopFlag& stopFlag){
+
+				while(!stopFlag);
+
+				std::this_thread::sleep_for( std::chrono::seconds(1) );
+
+				waitForContinueStoping.get_future().wait();
+
+			};
+
+			thread->executeRoutine( threadRoutine );
+			//actualy send stop signal
+			thread->stopAsync();
+
+			//generate first warning can't stop thread again
+			thread->stopAsync();
+			//generate second warning can't stop thread too
+			thread->stopSync();
+		}*/
 	}
 }
