@@ -8,14 +8,28 @@ namespace GAS
 	Thread::Thread()
 		: need_stop_flag_{false}
 		, state_{ State::kIdle }
-		, thread_has_finished_signal_{ 1 }
 		, ID_{ ID_generator_++ }
 	{
 	}
 
 	Thread::~Thread()
 	{
-		stopSync();
+		std::unique_lock state_lock(state_lock_);
+
+		switch( state_ )
+		{
+			case State::kExecuting:
+			{
+				state_ = State::kStopping;
+				need_stop_flag_ = true;
+			}
+			case State::kStopping:
+			{
+				thread_finish_signal_.wait(state_lock);
+			}
+			default:
+				break;
+		}
 	}
 
 	bool Thread::executeRoutine( ThreadRoutine routine )
@@ -36,9 +50,6 @@ namespace GAS
 		need_stop_flag_ = false;
 		state_ = State::kExecuting;
 
-		//Countdown semaphore to 0
-		thread_has_finished_signal_.acquire();
-
 		auto executor = std::bind( &Thread::routineExecutor, this, std::placeholders::_1 );
 		thread_.reset( new std::thread( executor, routine ) );
 
@@ -51,7 +62,8 @@ namespace GAS
 	{
 		std::unique_lock state_lock(state_lock_);
 
-		if ( state_ != State::kExecuting )
+		if ( state_ != State::kExecuting &&
+			 state_ != State::kStopping )
 		{
 			auto state = state_;
 			state_lock.unlock();
@@ -62,16 +74,13 @@ namespace GAS
 			return false;
 		}
 
-		need_stop_flag_ = true;
-		state_ = State::kStopping;
+		if( state_ != State::kStopping )
+		{
+			need_stop_flag_ = true;
+			state_ = State::kStopping;
+		}
 
-		state_lock.unlock();
-
-		//Wait when semaphore will be released
-		thread_has_finished_signal_.acquire();
-
-		//Release semaphore for roll it to start state
-		thread_has_finished_signal_.release();
+		thread_finish_signal_.wait(state_lock);
 
 		return true;
 	}
@@ -106,12 +115,15 @@ namespace GAS
 	{
 		routine(need_stop_flag_);
 
-		std::lock_guard state_lock(state_lock_);
 
-		state_ = State::kIdle;
+		//explicitly create state_lock after routine finish 
+		{
+			std::unique_lock state_lock(state_lock_);
+
+			state_ = State::kIdle;
 		
-		//Release semaphore to notify that thread finish execution
-		thread_has_finished_signal_.release();
+			thread_finish_signal_.notify_all();
+		}
 	}
 
 }

@@ -41,6 +41,7 @@ namespace GAS
 
 		State state_;
 		std::mutex state_lock_;
+		std::condition_variable thread_finish_signal_;
 
 		unsigned int ID_;
 
@@ -49,9 +50,6 @@ namespace GAS
 		
 		// Using inside the routine to determine when execution must will be terminated.
 		ThreadNeedStopFlag need_stop_flag_;
-
-		//Using to notify when thread finish routine execution
-		std::binary_semaphore thread_has_finished_signal_;
 
 	private:
 

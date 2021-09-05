@@ -221,59 +221,59 @@ namespace Tests
 	{
 		GAS::FUNC_TRACE;
 
-		//TODO
-		/*{
+		{
 			GAS::LogTrace block_trace( "Check executing state" );
 
 			auto thread = getScope()->getCreator()->createObject<GAS::Thread>();
 
-			std::promise<void> checkExecutingStatePromise;
-			std::promise<void> waitFinishCheckExecutinState;
+			std::promise<void> waitRoutineStarExecute;
+			std::promise<void> waitRoutineFinishExecute;
 
 			auto threadRoutine = [&](GAS::ThreadNeedStopFlag& stopFlag){
-				checkExecutingStatePromise.set_value();
+				waitRoutineStarExecute.set_value();
 
-				waitFinishCheckExecutinState.get_future().get();
+				waitRoutineFinishExecute.get_future().get();
 			};
 
 			thread->executeRoutine( threadRoutine );
 
-			checkExecutingStatePromise.get_future().get();
+			waitRoutineStarExecute.get_future().get();
 
 			GAS::LOG_WARNING( "Thread must gen warning it can't be executin again" );
 
 			thread->executeRoutine( threadRoutine );
 
-			waitFinishCheckExecutinState.set_value();
+			waitRoutineFinishExecute.set_value();
 		}
 
-		if(0)
 		{
-			GAS::LogTrace block_trace( "Check stopping state" );
+			GAS::LogTrace block_trace( "Check stopping flag work" );
 
 			auto thread = getScope()->getCreator()->createObject<GAS::Thread>();
 
-			std::promise<void> waitForContinueStoping;
-			std::promise<void> waitFinishCheckExecutinState;
+			std::promise<void> waitRoutineStarExecute;
 
 			auto threadRoutine = [&](GAS::ThreadNeedStopFlag& stopFlag){
+				waitRoutineStarExecute.set_value();
 
-				while(!stopFlag);
-
-				std::this_thread::sleep_for( std::chrono::seconds(1) );
-
-				waitForContinueStoping.get_future().wait();
-
+				int i = 1;
+				while( !stopFlag )
+				{
+					GAS::LOG_ERROR( "%d time. Continue execute routine", i );
+					std::this_thread::sleep_for( std::chrono::milliseconds(10) );
+					++i;
+				}
 			};
 
-			thread->executeRoutine( threadRoutine );
-			//actualy send stop signal
-			thread->stopAsync();
+			GAS::LOG_ERROR( "Routine must print to output few times" );
 
-			//generate first warning can't stop thread again
-			thread->stopAsync();
-			//generate second warning can't stop thread too
+			thread->executeRoutine( threadRoutine );
+
+			std::this_thread::sleep_for( std::chrono::milliseconds(100) );
+
+			waitRoutineStarExecute.get_future().get();
+
 			thread->stopSync();
-		}*/
+		}
 	}
 }
