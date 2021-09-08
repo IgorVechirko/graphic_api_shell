@@ -193,28 +193,34 @@ namespace Tests
 		
 		GAS::DataBuff buff;
 
-		size_t data_size = 256;
-		buff.allocData(data_size);
+		size_t buff_size = 256;
+		buff.allocBuff(buff_size);
 
-		if( buff.getDataSize() != data_size )
+		if( buff.getBuffSize() != buff_size )
+		{
+			GAS::LOG_ERROR( "Wrong buffer size" );
+			return;
+		}
+
+		if( buff.getDataSize() != 0 )
 		{
 			GAS::LOG_ERROR( "Buffer has wrong data size" );
 			return;
 		}
 
-		if ( ( buff.getData() + data_size/2 != buff.getData( data_size/2 ) ) ||
-			 ( buff.getData() + 0 != buff.getData() ) ||
-			 ( buff.getData() + (data_size-1) != buff.getData(data_size-1) )
+		if ( ( buff.getBuff() + buff_size/2 != buff.getBuff( buff_size/2 ) ) ||
+			 ( buff.getBuff() + 0 != buff.getBuff() ) ||
+			 ( buff.getBuff() + (buff_size-1) != buff.getBuff(buff_size-1) )
 			)
 		{
 			GAS::LOG_ERROR( "getData working wrong" );
 			return;
 		}
 
-		buff.allocData( data_size*2 );
-		buff.deallocData();
-		buff.allocData( data_size*3 );
-		buff.allocData( data_size*4 );
+		buff.allocBuff( buff_size*2 );
+		buff.deallocBuff();
+		buff.allocBuff( buff_size*3 );
+		buff.allocBuff( buff_size*4 );
 	}
 	
 	void AutoTestsScene::testThread()

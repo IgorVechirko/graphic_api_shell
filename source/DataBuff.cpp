@@ -6,49 +6,67 @@ namespace GAS
 {
 
 	DataBuff::DataBuff()
-		: data_( nullptr )
-		, data_size_( 0 )
+		: buffer_{ nullptr }
+		, buffer_size_{ 0 }
+		, data_size_{ 0 }
 	{
 	}
 
 	DataBuff::~DataBuff()
 	{
-		deallocData();
+		deallocBuff();
 	}
 
-	void DataBuff::allocData( size_t data_size )
+	void DataBuff::allocBuff( size_t buffer_size )
 	{
-		if ( data_size && (data_size > data_size_) )
+		if ( buffer_size && (buffer_size > buffer_size_) )
 		{
-			if ( data_ )
+			if ( buffer_ )
 			{
-				deallocate(data_);
+				deallocate(buffer_);
 			}
 
-			data_size_ = data_size;
+			buffer_size_ = buffer_size;
 
-			data_ = static_cast<char*>( allocate(data_size_) );
+			buffer_ = static_cast<char*>( allocate(buffer_size_) );
 		}
 	}
 
-	void DataBuff::deallocData()
+	void DataBuff::deallocBuff()
 	{
-		deallocate(data_);
-		data_ = nullptr;
+		deallocate(buffer_);
+		buffer_ = nullptr;
+		buffer_size_ = 0;
 		data_size_ = 0;
 	}
 
-	char* DataBuff::getData( size_t offset ) const
+	char* DataBuff::getBuff( size_t offset ) const
 	{
-		if ( offset >= data_size_ )
+		if ( offset >= buffer_size_ )
 		{
-			LOG_ERROR( "Data size if less then %d", offset );
+			LOG_ERROR( "Buffer size if less then %d", offset );
 			return nullptr;	
 		}
 
-		return data_ + offset;
+		return buffer_ + offset;
 	}
 	
+	size_t DataBuff::getBuffSize() const
+	{
+		return buffer_size_;
+	}
+
+	void DataBuff::setDataSize(size_t data_size)
+	{
+		if ( data_size > buffer_size_ )
+		{
+			LOG_ERROR( "Data size(%d) can't be more then buffer size(%d)", data_size, buffer_size_);
+			return;
+		}
+
+		data_size_ = data_size;
+	}
+
 	size_t DataBuff::getDataSize() const
 	{
 		return data_size_;

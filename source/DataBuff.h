@@ -18,15 +18,19 @@ namespace GAS
 		DataBuff();
 		virtual ~DataBuff();
 
-		void allocData( size_t data_size );
-		void deallocData();
+		void allocBuff( size_t data_size );
+		void deallocBuff();
 
-		char* getData( size_t offset = 0) const;
+		char* getBuff( size_t offset = 0) const;
+		size_t getBuffSize() const;
+
+		void setDataSize(size_t data_size);
 		size_t getDataSize() const;
 
 	private:
 
-		char* data_;
+		char* buffer_;
+		size_t buffer_size_;
 		size_t data_size_;
 
 	};
