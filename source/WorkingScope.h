@@ -35,6 +35,8 @@ namespace GAS
 
 		AutoReleasePool* getReleasePool() const;
 
+		WorkingScopeDelegate* getDelegate() const;
+
 		Scheduler* getScheduler() const; 
 
 		FileUtils* getFileUtils() const;

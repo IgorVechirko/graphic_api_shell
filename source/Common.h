@@ -53,7 +53,7 @@ namespace GAS
 
 	public:
 
-		LogTrace( const std::string& trace_text, LogLevel log_level = LogLevel::kSecond );
+		LogTrace( const std::string& trace_text, LogLevel log_level = LogLevel::kThird );
 		virtual ~LogTrace();
 
 	private:
@@ -71,6 +71,8 @@ namespace GAS
 #define LOG_WARNING( __FORMAT__, ... ) log( LogLevel::kSecond, LogMask::kUniversal, __FORMAT__, __VA_ARGS__ );
 #define LOG_DEBUG( __FORMAT__, ... ) log( LogLevel::kThird, LogMask::kUniversal, __FORMAT__, __VA_ARGS__ );
 
-#define FUNC_TRACE LogTrace trance_func( __FUNCTION__ );
+#define FUNC_TRACE_ERROR LogTrace trance_func( __FUNCTION__, LogLevel::kFirst );
+#define FUNC_TRACE_WARNING LogTrace trance_func( __FUNCTION__, LogLevel::kSecond );
+#define FUNC_TRACE_DEBUG LogTrace trance_func( __FUNCTION__, LogLevel::kThird );
 
 #endif //GAS_Common_H

@@ -1,5 +1,7 @@
 #include "AutoTestsScene.h"
 
+#include <filesystem>
+
 #include "Allocator.h"
 #include "Ref.h"
 #include "AutoReleasePool.h"
@@ -8,6 +10,9 @@
 #include "DataBuff.h"
 #include "Thread.h"
 #include "ThreadsPool.h"
+#include "TestsDelegate.h"
+#include "FileUtils.h"
+#include "File.h"
 
 namespace Tests
 {
@@ -23,20 +28,22 @@ namespace Tests
 	void AutoTestsScene::onInit()
 	{
 		testAllocator();
-		GAS::LOG_ERROR( "" );
+		GAS::LOG_DEBUG( "" );
 		testAutoReleasePool();
-		GAS::LOG_ERROR( "" );
+		GAS::LOG_DEBUG( "" );
 		testAutoRef();
-		GAS::LOG_ERROR( "" );
+		GAS::LOG_DEBUG( "" );
 		testDataBuff();
-		GAS::LOG_ERROR( "" );
+		GAS::LOG_DEBUG( "" );
+		testFileUtils();
+		GAS::LOG_DEBUG( "" );
 		testThread();
-		GAS::LOG_ERROR( "" );
+		GAS::LOG_DEBUG( "" );
 	}
 
 	void AutoTestsScene::testAllocator()
 	{
-		GAS::FUNC_TRACE;
+		GAS::FUNC_TRACE_DEBUG;
 
 		{
 			GAS::LogTrace block_trace( "Detect leak test" );
@@ -46,7 +53,7 @@ namespace Tests
 			int* integer = static_cast<int*>(allocator.allocate(sizeof(int)));
 			*integer = 4578;
 
-			GAS::LOG_WARNING( "Allocator must detect memmory leak" );
+			GAS::LOG_DEBUG( "Allocator must detect memmory leak" );
 		}
 
 		{
@@ -60,7 +67,7 @@ namespace Tests
 
 			allocator.deallocate( data );
 
-			GAS::LOG_WARNING( "Allocator must finish without leaks" );
+			GAS::LOG_DEBUG( "Allocator must finish without leaks" );
 		}
 
 		{
@@ -77,14 +84,14 @@ namespace Tests
 			int* integer = new int;
 			*integer = 4578;
 
-			GAS::LOG_WARNING( "Allocator must detect more deallocation then allocation was" );
+			GAS::LOG_DEBUG( "Allocator must detect more deallocation then allocation was" );
 			allocator.deallocate( integer );
 		}
 	}
 
 	void AutoTestsScene::testAutoReleasePool()
 	{
-		GAS::FUNC_TRACE;
+		GAS::FUNC_TRACE_DEBUG;
 
 		{
 			GAS::LogTrace block_trace( "Detect remaining refs" );
@@ -99,7 +106,7 @@ namespace Tests
 			ref->retain();
 			release_pool->addRef( ref );
 
-			GAS::LOG_WARNING( "ReleasePool must finish with detect remaining refs" );
+			GAS::LOG_DEBUG( "ReleasePool must finish with detect remaining refs" );
 		}
 
 		{
@@ -117,7 +124,7 @@ namespace Tests
 			release_pool->addRef( ref );
 			ref->release();
 
-			GAS::LOG_WARNING( "ReleasePool must finish without detect remaining refs" );
+			GAS::LOG_DEBUG( "ReleasePool must finish without detect remaining refs" );
 		}
 
 		{
@@ -137,7 +144,7 @@ namespace Tests
 			release_pool->addRef( ref );
 			ref->release();
 
-			GAS::LOG_WARNING( "Allocator must finish without leaks" );
+			GAS::LOG_DEBUG( "Allocator must finish without leaks" );
 		}
 
 		{
@@ -147,7 +154,7 @@ namespace Tests
 
 	void AutoTestsScene::testAutoRef()
 	{
-		GAS::FUNC_TRACE;
+		GAS::FUNC_TRACE_DEBUG;
 
 		auto objRef = getScope()->getCreator()->createObject<Ref>();
 		
@@ -185,11 +192,20 @@ namespace Tests
 			GAS::LOG_ERROR( "Ref object have wrong refs_count after call move constructor" );
 			return;
 		}
+
+		auto secondCopy = secondRef;
+		secondRef = objRef;
+
+		if ( secondCopy->getRefsCount() != 1 )
+		{
+			GAS::LOG_ERROR( "Simple assign operator works wrong" );
+			return;
+		}
 	}
 
 	void AutoTestsScene::testDataBuff()
 	{
-		GAS::FUNC_TRACE;
+		GAS::FUNC_TRACE_DEBUG;
 		
 		GAS::DataBuff buff;
 
@@ -223,9 +239,127 @@ namespace Tests
 		buff.allocBuff( buff_size*4 );
 	}
 	
+	void AutoTestsScene::testFileUtils()
+	{
+		GAS::FUNC_TRACE_DEBUG;
+
+		auto tests_delegate = dynamic_cast<TestsDelegate*>(getScope()->getDelegate());
+		if ( !tests_delegate )
+		{
+			GAS::LOG_ERROR( "Can't cast delegate" );
+			return;
+		}
+
+		auto argc = tests_delegate->getAppArgc();
+		auto argv = tests_delegate->getAppArgv();
+
+		if ( argc <= 0 || !argv )
+		{
+			GAS::LOG_ERROR( "No application arguments" );
+			return;
+		}
+
+		std::string application_full_name( argv[0] );
+		GAS::LOG_DEBUG( "Application full name %s", application_full_name.c_str() );
+
+		std::string invalid_file_full_name = application_full_name;
+		invalid_file_full_name.resize( invalid_file_full_name.size()-1 );
+
+		std::filesystem::path application_path(application_full_name);
+		std::filesystem::path invalid_file_path(invalid_file_full_name);
+
+		auto file_utils = getScope()->getFileUtils();
+
+		{
+			auto invalid_file = file_utils->getFile(invalid_file_path);
+			if( &invalid_file )
+			{
+				GAS::LOG_ERROR( "If file doesn't exist fileUtils must return nullptr file" );
+				return;
+			}
+		}
+
+		{
+			auto invalid_file = file_utils->cacheFile(invalid_file_path);
+			if( &invalid_file )
+			{
+				GAS::LOG_ERROR( "If file doesn't exist fileUtils must return nullptr file" );
+				return;
+			}
+
+			invalid_file = file_utils->getCachedFile( invalid_file_path );
+			if( &invalid_file )
+			{
+				GAS::LOG_ERROR( "If file doesn't exist fileUtils must return nullptr file" );
+				return;
+			}
+		}
+
+		{
+			auto app_file = file_utils->getFile( application_path );
+			if ( !&app_file )
+			{
+				GAS::LOG_ERROR( "Can't file existing file" );
+				return;
+			}
+		}
+
+		{
+			auto app_file = file_utils->cacheFile( application_path );
+			if ( !&app_file )
+			{
+				GAS::LOG_ERROR( "Can't cache existing file" );
+				return;
+			}
+
+			app_file = file_utils->getCachedFile( application_path );
+			if (!&app_file)
+			{
+				GAS::LOG_ERROR( "Existing file wasn't chache." );
+				return;
+			}
+
+			file_utils->uncacheFile( application_path );
+		}
+
+		{
+			auto app_file = file_utils->getFile( application_path );
+
+			if ( !app_file->open() )
+			{
+				GAS::LOG_ERROR( "Can't open existing file" );
+				return;
+			}
+
+			if( !app_file->isOpen() )
+			{
+				GAS::LOG_ERROR( "Opened file must return true" );
+				return;
+			}
+
+			GAS::LOG_DEBUG( "File must gen warning" );
+			if( app_file->open() )
+			{
+				GAS::LOG_ERROR( "Already opened file can't return true from open" );
+				return;
+			}
+
+			app_file->close();
+			
+			if( app_file->isOpen() )
+			{
+				GAS::LOG_ERROR( "Close file can't return true" );
+				return;
+			}
+
+			GAS::LOG_DEBUG( "File must gen warning" );
+			app_file->close();
+		}
+	}
+
 	void AutoTestsScene::testThread()
 	{
-		GAS::FUNC_TRACE;
+		GAS::FUNC_TRACE_DEBUG;
 
 		{
 			GAS::LogTrace block_trace( "Check executing state" );
@@ -245,7 +379,7 @@ namespace Tests
 
 			waitRoutineStarExecute.get_future().get();
 
-			GAS::LOG_WARNING( "Thread must gen warning it can't be executin again" );
+			GAS::LOG_DEBUG( "Thread must gen warning it can't be executing again" );
 
 			thread->executeRoutine( threadRoutine );
 
@@ -271,7 +405,7 @@ namespace Tests
 				}
 			};
 
-			GAS::LOG_ERROR( "Routine must print to output few times" );
+			GAS::LOG_DEBUG( "Routine must print to output few times" );
 
 			thread->executeRoutine( threadRoutine );
 

@@ -3,6 +3,9 @@
 
 #include "Common.h"
 
+#include <filesystem>
+#include <stdio.h>
+
 #include "Ref.h"
 #include "DataBuff.h"
 
@@ -18,20 +21,27 @@ namespace GAS
 		File();
 		virtual ~File();
 
-		void setData( DataBuff* buff );
+		bool init( const std::filesystem::path& path );
 
-		const DataBuff* getConstData() const;
-		DataBuff* getData() const;
+		bool open();
+		void close();
+		bool isOpen();
 
-		void setPath( const std::string& path );
-		const std::string& getPath() const;
+		size_t read( char* buff, size_t read_size );
+		size_t readToInnerBuff();
+
+		const DataBuff* getInnerBuff() const;
+		std::shared_ptr<DataBuff> stealInnerBuff();
+
+		const std::filesystem::path& getPath() const;
 
 	private:
 
-		std::string path_;
+		std::filesystem::path path_;
 
-		DataBuff* data_;
+		std::unique_ptr<DataBuff> buffer_;
 
+		FILE* filesystem_file_;
 	};
 
 }

@@ -44,7 +44,7 @@ namespace GAS
 	std::map<LogLevel, LogTextColour> log_level_to_colour{
 		{LogLevel::kFirst, LogTextColour::kRed},
 		{LogLevel::kSecond, LogTextColour::kYellow},
-		{LogLevel::kThird, LogTextColour::kGreen},
+		{LogLevel::kThird, LogTextColour::kWhite},
 	};
 
 	void setLogParams(LogLevel level, unsigned int masks )

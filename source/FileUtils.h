@@ -3,6 +3,8 @@
 
 #include "Common.h"
 
+#include <filesystem>
+
 #include "WorkingScopeProvider.h"
 #include "File.h"
 #include "AutoRef.h"
@@ -20,14 +22,16 @@ namespace GAS
 		MAKE_UNCOPYABLE(FileUtils);
 		virtual ~FileUtils();
 
-		AutoRef<File> loadFile( const std::string& path );
+		AutoRef<File> getFile( const std::filesystem::path& path );
 
-		void cacheFile( const std::string& path );
-		void uncacheFile( const std::string& path );
+		AutoRef<File> cacheFile( const std::filesystem::path& path );
+		AutoRef<File> getCachedFile( const std::filesystem::path& path );
+		void uncacheFile( const std::filesystem::path& path );
 
 	private:
 
-		std::map<std::string,File*> cached_files_;
+		std::map<std::filesystem::path,File*> cached_files_;
+		std::mutex cache_lock_;
 
 	};
 

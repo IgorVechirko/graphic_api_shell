@@ -8,8 +8,10 @@
 namespace Tests
 {
 
-	TestsDelegate::TestsDelegate()
+	TestsDelegate::TestsDelegate( int argc, char** argv )
 		: current_scene_( nullptr )
+		, app_argc_(argc)
+		, app_argv_(argv)
 	{
 	}
 
@@ -24,6 +26,16 @@ namespace Tests
 		setupScenesCreateFunc();
 		
 		runNextTestScene();
+	}
+
+	int TestsDelegate::getAppArgc() const
+	{
+		return app_argc_;
+	}
+
+	char** TestsDelegate::getAppArgv() const
+	{
+		return app_argv_;
 	}
 
 	void TestsDelegate::setupScenesCreateFunc()
@@ -51,7 +63,7 @@ namespace Tests
 			return;
 		}
 		
-		//if curretn scene already exist
+		//if current scene already exist
 		for( auto scene_func_it = tests_scenes_create_funcs_.begin(); scene_func_it != tests_scenes_create_funcs_ .end(); ++scene_func_it )
 		{
 			if ( scene_func_it->first == current_scene_->getName() )
@@ -65,6 +77,7 @@ namespace Tests
 					scene_func_it = tests_scenes_create_funcs_.begin();
 				}
 
+				//here we call scene create function which is the second member of scene_func_it
 				auto sceneRef = scene_func_it->second( scene_func_it->first );
 
 				getScope()->setScene( &sceneRef );

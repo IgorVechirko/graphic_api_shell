@@ -65,6 +65,11 @@ namespace GAS
 		return auto_release_pool_.get();
 	}
 
+	WorkingScopeDelegate* WorkingScope::getDelegate() const
+	{
+		return delegate_.get();
+	}
+
 	Scheduler* WorkingScope::getScheduler() const
 	{
 		return scheduler_.get();

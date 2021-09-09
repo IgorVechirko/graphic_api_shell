@@ -7,7 +7,7 @@ int main( int argc, char** argv )
 {
 	int ret = 0;
 	{
-		GAS::WorkingScope scope(new Tests::TestsDelegate());
+		GAS::WorkingScope scope(new Tests::TestsDelegate(argc, argv));
 
 		ret = scope.run();
 	}

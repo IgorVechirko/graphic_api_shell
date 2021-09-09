@@ -15,10 +15,13 @@ namespace Tests
 
 	public:
 
-		TestsDelegate();
+		TestsDelegate( int argc, char** argv );
 		virtual ~TestsDelegate();
 
 		virtual void onBeforeRun() override;
+
+		int getAppArgc() const;
+		char** getAppArgv() const;
 
 	private:
 
@@ -36,6 +39,9 @@ namespace Tests
 		}
 
 	private:
+
+		int app_argc_;
+		char** app_argv_;
 
 		typedef std::function<GAS::AutoRef<TestSceneBase>(const std::string&)> TestSceneCreateFunc;
 
