@@ -156,50 +156,91 @@ namespace Tests
 	{
 		GAS::FUNC_TRACE_DEBUG;
 
-		auto objRef = getScope()->getCreator()->createObject<Ref>();
-		
-		if ( objRef->getRefsCount() != 2 )
 		{
-			GAS::LOG_ERROR( "Ref object have wrong refs_count" );
-			return;
+			GAS::LogTrace block_trace( "Constructor check");
+
+			GAS::Ref ref;
+			GAS::AutoRef<Ref> autoRef( &ref );
+
+			if ( ref.getRefsCount() != 1 )
+			{
+				GAS::LOG_ERROR( "AutoRef constructor works wrong" );
+				return;
+			}
 		}
 
-		auto secondRef(objRef);
-
-		if ( objRef->getRefsCount() != 3 )
 		{
-			GAS::LOG_ERROR( "Ref object have wrong refs_count" );
-			return;
+			GAS::LogTrace block_trace( "Copy constructor check");
+
+			GAS::Ref ref;
+			GAS::AutoRef<Ref> autoRef( &ref );
+			GAS::AutoRef<Ref> autoRefCopy( autoRef );
+
+			if ( ref.getRefsCount() != 2 )
+			{
+				GAS::LOG_ERROR( "AutoRef copy constructor works wrong" );
+				return;
+			}
 		}
 
-		secondRef.reset(nullptr);
-
-		if ( objRef->getRefsCount() != 2 )
 		{
-			GAS::LOG_ERROR( "Ref object have wrong refs_count after call reset" );
-			return;
+			GAS::LogTrace block_trace( "Move constructor check");
+
+			GAS::Ref ref;
+			auto createFunc = [&]() -> GAS::AutoRef<Ref> {
+				GAS::AutoRef<Ref> autoRef(&ref);
+				return autoRef;
+			};
+
+			GAS::AutoRef<Ref> autoRefCopy( std::move( createFunc() ) );
+
+			if ( ref.getRefsCount() != 1 )
+			{
+				GAS::LOG_ERROR( "AutoRef move constructor works wrong" );
+				return;
+			}
 		}
 
-		auto func = [&]() -> GAS::AutoRef<Ref> {
-			auto newRef(objRef);
-			return newRef;
-		};
-
-		secondRef = func();
-
-		if ( objRef->getRefsCount() != 3 )
 		{
-			GAS::LOG_ERROR( "Ref object have wrong refs_count after call move constructor" );
-			return;
+			GAS::LogTrace block_trace( "Assignment operator check");
+
+			GAS::Ref ref;
+			GAS::AutoRef<Ref> autoRef(&ref);
+			GAS::AutoRef<Ref> autoRefCopy(nullptr);
+			autoRefCopy = autoRef;
+
+			if ( ref.getRefsCount() != 2 )
+			{
+				GAS::LOG_ERROR( "AutoRef assignment operator works wrong" );
+				return;
+			}
 		}
 
-		auto secondCopy = secondRef;
-		secondRef = objRef;
-
-		if ( secondCopy->getRefsCount() != 1 )
 		{
-			GAS::LOG_ERROR( "Simple assign operator works wrong" );
-			return;
+			GAS::LogTrace block_trace( "\"operator&\" check");
+
+			GAS::Ref ref;
+			GAS::AutoRef<Ref> autoRef( &ref );
+
+			if ( &autoRef != &ref )
+			{
+				GAS::LOG_ERROR( "AutoRef \"operator&\" works wrong" );
+				return;
+			}
+		}
+
+		{
+			GAS::LogTrace block_trace( "\"reset\" method check");
+
+			GAS::Ref ref;
+			GAS::AutoRef<Ref> autoRef( &ref );
+			autoRef.reset(nullptr);
+
+			if ( ref.getRefsCount() != 0 || &autoRef != nullptr )
+			{
+				GAS::LOG_ERROR( "AutoRef \"reset\" method works wrong" );
+				return;
+			}
 		}
 	}
 
