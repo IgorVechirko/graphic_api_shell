@@ -53,7 +53,7 @@ namespace Tests
 
 		vec2 *= 2;
 
-		if ( vec2.x != 5 || vec2.y != 4 )
+		if ( vec2.x != 4 || vec2.y != 4 )
 		{
 			GAS::LOG_ERROR( "Glm works wrong" );
 		}
