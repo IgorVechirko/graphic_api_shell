@@ -20,6 +20,7 @@ namespace Tests
 
 	private:
 
+		void testGlmIntegration();
 		void testAllocator();
 		void testAutoReleasePool();
 		void testAutoRef();

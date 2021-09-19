@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED( VERSION 3.8 )
 
 project( graphic_api_shell VERSION 0.1.0.0	LANGUAGES CXX )
 
-set( GAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.. )
+set( GAS_DIR ${CMAKE_CURRENT_SOURCE_DIR} )
 
 
 #sources
@@ -43,6 +43,7 @@ if( MSVC )
     list( APPEND FactoryBase ${GAS_SRC_DIR}/D3DWindowsFactory.h ${GAS_SRC_DIR}/D3DWindowsFactory.cpp )
 
 endif()
+
 
 #create project groups
 source_group( common FILES 
@@ -120,8 +121,18 @@ set( GAS_SRC
 )
 
 
+#link external dependencies
+
+#added glm static build just for display glm sources in VS project
+if ( MSVC )
+    set( BUILD_STATIC_LIBS ON )
+endif()
+add_subdirectory( ${GAS_DIR}/externals/glm/glm )
+
 #setup project
 add_library( graphic_api_shell STATIC ${GAS_SRC} )
+
+target_link_libraries( graphic_api_shell glm )
 
 set_property( TARGET graphic_api_shell PROPERTY CXX_STANDARD 20 )
 
@@ -132,7 +143,10 @@ if ( MSVC )
 endif()
 
 
-#functional tests project
+
+##################################################
+########### functional tests project #############
+##################################################
 
 set( FUNC_TESTS_SRC_DIR ${GAS_DIR}/tests )
 

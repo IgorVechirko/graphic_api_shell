@@ -2,6 +2,8 @@
 
 #include <filesystem>
 
+#include "glm/glm.hpp"
+
 #include "Allocator.h"
 #include "Ref.h"
 #include "AutoReleasePool.h"
@@ -27,6 +29,8 @@ namespace Tests
 
 	void AutoTestsScene::onInit()
 	{
+		testGlmIntegration();
+		GAS::LOG_DEBUG( "" );
 		testAllocator();
 		GAS::LOG_DEBUG( "" );
 		testAutoReleasePool();
@@ -39,6 +43,20 @@ namespace Tests
 		GAS::LOG_DEBUG( "" );
 		testThread();
 		GAS::LOG_DEBUG( "" );
+	}
+
+	void AutoTestsScene::testGlmIntegration()
+	{
+		GAS::FUNC_TRACE_DEBUG;
+
+		glm::uvec2 vec2{ 2, 2 };
+
+		vec2 *= 2;
+
+		if ( vec2.x != 5 || vec2.y != 4 )
+		{
+			GAS::LOG_ERROR( "Glm works wrong" );
+		}
 	}
 
 	void AutoTestsScene::testAllocator()
