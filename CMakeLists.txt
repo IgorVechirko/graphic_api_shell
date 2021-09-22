@@ -35,6 +35,8 @@ set( Camera ${GAS_SRC_DIR}/Camera.h ${GAS_SRC_DIR}/Camera.cpp )
 set( ThreadsPool ${GAS_SRC_DIR}/ThreadsPool.h ${GAS_SRC_DIR}/ThreadsPool.cpp )
 set( Thread ${GAS_SRC_DIR}/Thread.h ${GAS_SRC_DIR}/Thread.cpp )
 
+set( D3DContext ${GAS_SRC_DIR}/D3DContext.h ${GAS_SRC_DIR}/D3DContext.cpp )
+
 #windows sources
 
 if( MSVC )
@@ -91,6 +93,10 @@ source_group( threads FILES
                             ${Thread}
 )
 
+source_group( context FILES
+                            ${D3DContext}
+)
+
 set( GAS_SRC 
              ${Common}
 
@@ -118,6 +124,8 @@ set( GAS_SRC
 
              ${ThreadsPool}
              ${Thread}
+
+             ${D3DContext}
 )
 
 
@@ -132,7 +140,7 @@ add_subdirectory( ${GAS_DIR}/externals/glm/glm )
 #setup project
 add_library( graphic_api_shell STATIC ${GAS_SRC} )
 
-target_link_libraries( graphic_api_shell glm )
+target_link_libraries( graphic_api_shell glm d3d11.lib )
 
 set_property( TARGET graphic_api_shell PROPERTY CXX_STANDARD 20 )
 

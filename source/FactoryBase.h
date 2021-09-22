@@ -9,6 +9,7 @@
 #include "Scheduler.h"
 #include "FileUtils.h"
 #include "ThreadsPool.h"
+#include "D3DContext.h"
 
 namespace GAS
 {
@@ -31,6 +32,8 @@ namespace GAS
 		FileUtils* createFileUtils();
 
 		ThreadsPool* createThreadsPool();
+
+		D3DContext* createD3DContext();
 
 	};
 

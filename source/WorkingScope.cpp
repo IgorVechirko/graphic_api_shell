@@ -19,6 +19,10 @@ namespace GAS
 		auto factory = delegate_->createFactoryHook(this);
 		factory_.reset( factory ? factory : createFactory() );
 
+		d3d_context_.reset( factory_->createD3DContext() );
+		d3d_context_->setScope(this);
+		d3d_context_->init();
+
 		creator_.reset( factory_->createObjectsCreator() );
 		creator_->setScope(this);
 
@@ -28,10 +32,10 @@ namespace GAS
 		scheduler_.reset( factory_->createScheduler() );
 		scheduler_->setScope(this);
 
-		file_utils_.reset( factory->createFileUtils() );
+		file_utils_.reset( factory_->createFileUtils() );
 		file_utils_->setScope( this );
 
-		threads_pool_.reset( factory->createThreadsPool() );
+		threads_pool_.reset( factory_->createThreadsPool() );
 		threads_pool_->setScope( this );
 	}
 
@@ -83,6 +87,11 @@ namespace GAS
 	ThreadsPool* WorkingScope::getThreadsPool() const
 	{
 		return threads_pool_.get();
+	}
+
+	D3DContext* WorkingScope::getD3DContext() const
+	{
+		return d3d_context_.get();
 	}
 
 	void WorkingScope::setScene( SceneBase* scene )

@@ -43,6 +43,8 @@ namespace GAS
 
 		ThreadsPool* getThreadsPool() const;
 
+		D3DContext* getD3DContext() const;
+
 		void setScene( SceneBase* scene );
 		AutoRef<SceneBase> getScene() const;
 
@@ -65,6 +67,8 @@ namespace GAS
 		std::unique_ptr<FileUtils> file_utils_;
 
 		std::unique_ptr<ThreadsPool> threads_pool_;
+
+		std::unique_ptr<D3DContext> d3d_context_;
 
 		SceneBase* scene_;
 		mutable std::shared_mutex scene_lock_;

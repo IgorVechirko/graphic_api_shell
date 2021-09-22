@@ -35,4 +35,9 @@ namespace GAS
 	{
 		return new ThreadsPool();
 	}
+
+	D3DContext* FactoryBase::createD3DContext()
+	{
+		return new D3DContext();
+	}
 }
